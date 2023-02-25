@@ -19,7 +19,7 @@ public class FeedbackResponse {
 
 
     @ManyToOne
-    @JoinColumn(name = "feedbackSubCategoryId")
+    @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
     public FeedbackResponse() {
