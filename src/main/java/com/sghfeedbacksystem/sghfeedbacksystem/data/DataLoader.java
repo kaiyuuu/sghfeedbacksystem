@@ -1,7 +1,10 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.data;
 
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
+import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,8 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private FeedbackCategoryService feedbackCategoryService;
+    @Autowired
+    private FeedbackSubCategoryService feedbackSubCategoryService;
 
     public DataLoader() {
     }
@@ -32,6 +37,22 @@ public class DataLoader implements CommandLineRunner {
     public void loadFeedbackSubCategories() {
         System.out.println("loading feedback subcategories...");
 
+        FeedbackSubCategory room = new FeedbackSubCategory("Room", "heres the description...");
+        FeedbackSubCategory restrooms = new FeedbackSubCategory("Restroms", "heres the description...");
+        FeedbackSubCategory staff = new FeedbackSubCategory("Staff", "heres the description...");
+        FeedbackSubCategory pantry = new FeedbackSubCategory("Pantry", "heres the description...");
+        FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
+
+        try {
+            feedbackSubCategoryService.saveFeedbackSubCategory(room, new Long(1));
+            feedbackSubCategoryService.saveFeedbackSubCategory(restrooms, new Long(1));
+            feedbackSubCategoryService.saveFeedbackSubCategory(staff, new Long(1));
+            feedbackSubCategoryService.saveFeedbackSubCategory(pantry, new Long(1));
+            feedbackSubCategoryService.saveFeedbackSubCategory(bins, new Long(1));
+
+        } catch (FeedbackCategoryNotFoundException exception) {
+            System.out.println("sth went wrong in loading feedback subcategories");
+        }
 
     }
 

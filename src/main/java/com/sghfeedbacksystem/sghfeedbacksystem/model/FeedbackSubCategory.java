@@ -20,8 +20,7 @@ public class FeedbackSubCategory {
     public FeedbackSubCategory() {
     }
 
-    public FeedbackSubCategory(Long subCategoryId, String subCategoryName, String subCategoryDescription) {
-        this.feedbackSubCategoryId = subCategoryId;
+    public FeedbackSubCategory(String subCategoryName, String subCategoryDescription) {
         this.subCategoryName = subCategoryName;
         this.subCategoryDescription = subCategoryDescription;
     }
