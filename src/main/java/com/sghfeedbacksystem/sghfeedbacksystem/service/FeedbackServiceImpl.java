@@ -2,6 +2,8 @@ package com.sghfeedbacksystem.sghfeedbacksystem.service;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FeedbackServiceImpl implements  FeedbackService{
+public class FeedbackServiceImpl implements FeedbackService{
 
     @Autowired
     private FeedbackRepository feedbackRepository;
@@ -53,5 +55,17 @@ public class FeedbackServiceImpl implements  FeedbackService{
                 x.getFeedbackStatus().equals(FeedbackStatusEnum.REVIEWING))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException {
+
+        Feedback feedbackToUpdate = feedbackRepository.findById(feedbackId).get();
+        if(feedbackToUpdate!=null) {
+            feedbackToUpdate.setFeedbackStatus(feedbackStatus);
+            return feedbackRepository.save(feedbackToUpdate);
+        } else {
+            throw new FeedbackNotFoundException();
+        }
     }
 }

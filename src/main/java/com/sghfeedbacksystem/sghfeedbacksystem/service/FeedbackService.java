@@ -3,6 +3,8 @@ package com.sghfeedbacksystem.sghfeedbacksystem.service;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackResponse;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -16,15 +18,13 @@ public interface FeedbackService {
     //for PO
     List<Feedback> findFeedbackByCategory(Long categoryId);
     List<Feedback> findFeedbackBySubCategory(Long subCategoryId);
-//    FeedbackResponse saveFeedbackResponse(FeedbackResponse feedbackResponse, Feedback feedback, );
-//    List<FeedbackResponse> findFeedbackResponseByAuthor();
-
 
     //for staff
     List<Feedback> findFeedbackByAuthor(Long userId);
     List<Feedback> findFeedbacksUnderReview();
-//    Feedback saveFeedback();
-//    Feedback deleteFeedback(Long feedbackId);
+     Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
+//     Feedback saveFeedback();
+//     Feedback deleteFeedback(Long feedbackId);
 
 
 }
