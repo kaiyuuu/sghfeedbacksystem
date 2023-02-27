@@ -85,4 +85,12 @@ public class Feedback {
     public void setFeedbackStatus(FeedbackStatusEnum feedbackStatus) {
         this.feedbackStatus = feedbackStatus;
     }
+
+    public FeedbackSubCategory getFeedbackSubCategory() {
+        return feedbackSubCategory;
+    }
+
+    public void setFeedbackSubCategory(FeedbackSubCategory feedbackSubCategory) {
+        this.feedbackSubCategory = feedbackSubCategory;
+    }
 }

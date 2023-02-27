@@ -1,27 +1,42 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.service;
-
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FeedbackServiceImpl implements  FeedbackService{
 
+    @Autowired
+    private FeedbackRepository feedbackRepository;
+
+
+    //not tested
     @Override
     public List<Feedback> findAllFeedbackByDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return null;
+
+        List<Feedback> allFeedback = feedbackRepository.findAll();
+        return allFeedback.stream().filter(x ->
+                x.getFeedbackDate().isAfter(startDate)
+                        && x.getFeedbackDate().isBefore(endDate)).collect(Collectors.toList());
+
     }
 
+    //not tested
     @Override
     public List<Feedback> findFeedbackByCategory(Long categoryId) {
-        return null;
+        return feedbackRepository.findFeedbackByCategoryId(categoryId);
     }
 
+    //not tested
     @Override
     public List<Feedback> findFeedbackBySubCategory(Long subCategoryId) {
-        return null;
+        return feedbackRepository.findFeedbackBySubCategoryId(subCategoryId);
     }
 
     @Override
@@ -29,8 +44,14 @@ public class FeedbackServiceImpl implements  FeedbackService{
         return null;
     }
 
+    //not tested
     @Override
     public List<Feedback> findFeedbacksUnderReview() {
-        return null;
+
+        List<Feedback> allFeedback = feedbackRepository.findAll();
+        return allFeedback.stream().filter(x ->
+                x.getFeedbackStatus().equals(FeedbackStatusEnum.REVIEWING))
+                .collect(Collectors.toList());
+
     }
 }

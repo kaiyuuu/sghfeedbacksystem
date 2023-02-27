@@ -9,9 +9,9 @@ public class FeedbackSubCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long feedbackSubCategoryId;
     @Column(nullable = false)
-    private String subCategoryName;
+    private String feedbackSubcategoryName;
     @Column(nullable = false)
-    private String subCategoryDescription;
+    private String feedbackSubCategoryDescription;
 
     @ManyToOne
     @JoinColumn(name = "feedbackCategoryId")
@@ -20,9 +20,9 @@ public class FeedbackSubCategory {
     public FeedbackSubCategory() {
     }
 
-    public FeedbackSubCategory(String subCategoryName, String subCategoryDescription) {
-        this.subCategoryName = subCategoryName;
-        this.subCategoryDescription = subCategoryDescription;
+    public FeedbackSubCategory(String feedbackSubcategoryName, String feedbackSubCategoryDescription) {
+        this.feedbackSubcategoryName = feedbackSubcategoryName;
+        this.feedbackSubCategoryDescription = feedbackSubCategoryDescription;
     }
 
     public Long getSubCategoryId() {
@@ -33,20 +33,20 @@ public class FeedbackSubCategory {
         this.feedbackSubCategoryId = subCategoryId;
     }
 
-    public String getSubCategoryName() {
-        return subCategoryName;
+    public String getFeedbackSubcategoryName() {
+        return feedbackSubcategoryName;
     }
 
-    public void setSubCategoryName(String subCategoryName) {
-        this.subCategoryName = subCategoryName;
+    public void setFeedbackSubcategoryName(String feedbackSubcategoryName) {
+        this.feedbackSubcategoryName = feedbackSubcategoryName;
     }
 
-    public String getSubCategoryDescription() {
-        return subCategoryDescription;
+    public String getFeedbackSubCategoryDescription() {
+        return feedbackSubCategoryDescription;
     }
 
-    public void setSubCategoryDescription(String subCategoryDescription) {
-        this.subCategoryDescription = subCategoryDescription;
+    public void setFeedbackSubCategoryDescription(String feedbackSubCategoryDescription) {
+        this.feedbackSubCategoryDescription = feedbackSubCategoryDescription;
     }
 
     public FeedbackCategory getFeedbackCategory() {
