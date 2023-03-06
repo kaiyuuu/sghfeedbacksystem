@@ -3,12 +3,21 @@ package com.sghfeedbacksystem.sghfeedbacksystem.data;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackRoleEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.CannotDeleteFeedbackUnderReviewException;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.StaffNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component("loader")
 public class DataLoader implements CommandLineRunner {
@@ -20,6 +29,8 @@ public class DataLoader implements CommandLineRunner {
     private FeedbackCategoryService feedbackCategoryService;
     @Autowired
     private FeedbackSubCategoryService feedbackSubCategoryService;
+    @Autowired
+    private FeedbackService feedbackService;
     @Autowired
     private StaffRepository staffRepository;
     @Autowired
@@ -40,6 +51,7 @@ public class DataLoader implements CommandLineRunner {
             loadFeedbackCategories();
             loadFeedbackSubCategories();
             loadStaff();
+            loadFeedback();
         }
     }
 
@@ -132,5 +144,35 @@ public class DataLoader implements CommandLineRunner {
         staffRepository.save(staff3);
         feedbackTeamRepository.save(feedbackTeam);
 
+    }
+
+    public void loadFeedback() {
+        User staff1 = staffRepository.findById(1L).get();
+        User staff2 = staffRepository.findById(2L).get();
+        FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(2L).get();
+        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(11L).get();
+
+        Feedback feedback1 = new Feedback(new String ("Broken Sink"),
+                new String("The sink at level 2 men's toilet is broken pls fix :("),
+                Boolean.FALSE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+        Feedback feedback2 = new Feedback(new String ("Boss bully alert"),
+                new String("my boss sachin ajayan has been asking us to buy coffee for him 3 times a day everyday"),
+                Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+        Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
+                new String("Dummy feedback"),
+                Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+        try {
+            feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
+            feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);
+            feedbackService.saveFeedback((Staff) staff2, feedback3, feedbackSubCategory2);
+        } catch(StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
+            System.out.println("something went wrong while loading feedback");
+        }
+
+        try {
+            feedbackService.deleteFeedback(3L);
+        } catch (FeedbackNotFoundException | CannotDeleteFeedbackUnderReviewException exception) {
+            System.out.println("something went wrong while deleting feedback");
+        }
     }
 }
