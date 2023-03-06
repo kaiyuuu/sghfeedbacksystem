@@ -6,10 +6,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Staff;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.CannotDeleteFeedbackUnderReviewException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.StaffNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -25,7 +22,7 @@ public interface FeedbackService {
     List<Feedback> findFeedbackBySubCategory(Long subCategoryId);
 
     //for staff
-    List<Feedback> findFeedbackByAuthor(Long userId);
+    List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException;
     List<Feedback> findFeedbacksUnderReview();
      Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
      Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;

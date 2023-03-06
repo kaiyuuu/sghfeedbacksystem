@@ -24,7 +24,7 @@ public class Feedback {
     private FeedbackStatusEnum feedbackStatus;
 
     @ManyToOne
-    @JoinColumn(name = "feedbackSubCategoryId")
+    @JoinColumn(name = "feedbackSubCategory")
     private FeedbackSubCategory feedbackSubCategory;
 
     @ManyToOne

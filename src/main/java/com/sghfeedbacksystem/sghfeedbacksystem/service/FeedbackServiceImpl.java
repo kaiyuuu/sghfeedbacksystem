@@ -7,10 +7,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackSubCategoryRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.StaffRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.CannotDeleteFeedbackUnderReviewException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.StaffNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import jdk.internal.net.http.common.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +29,6 @@ public class FeedbackServiceImpl implements FeedbackService{
     private StaffRepository staffRepository;
 
 
-    //not tested
     @Override
     public List<Feedback> findAllFeedbackByDate(LocalDateTime startDate, LocalDateTime endDate) {
 
@@ -43,7 +39,6 @@ public class FeedbackServiceImpl implements FeedbackService{
 
     }
 
-    //not tested
     @Override
     public List<Feedback> findFeedbackByCategory(Long categoryId) {
         return feedbackRepository.findFeedbackByCategoryId(categoryId);
@@ -56,8 +51,13 @@ public class FeedbackServiceImpl implements FeedbackService{
     }
 
     @Override
-    public List<Feedback> findFeedbackByAuthor(Long userId) {
-        return null;
+    public List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException {
+
+        if(staffRepository.findById(userId).get() == null) {
+            throw new UserNotFoundException();
+        }
+
+        return feedbackRepository.findFeedbackByFeedbackAuthorId(userId);
     }
 
     //not tested
@@ -106,6 +106,7 @@ public class FeedbackServiceImpl implements FeedbackService{
         }
     }
 
+    //not tested
     @Override
     public Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException {
 

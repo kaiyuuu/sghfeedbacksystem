@@ -12,13 +12,13 @@ import java.util.List;
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    @Query("SELECT f FROM FeedbackResponse f WHERE f.feedback.feedbackId=:feedbackId")
-    List<FeedbackResponse> findAllFeedbackResponsesByFeedbackId(Long feedbackId);
-
     @Query("SELECT f FROM Feedback f WHERE f.feedbackSubCategory.feedbackSubCategoryId=:feedbackSubCategoryId")
     List<Feedback> findFeedbackBySubCategoryId(Long feedbackSubCategoryId);
 
     @Query("SELECT f FROM Feedback f WHERE f.feedbackSubCategory.feedbackCategory.feedbackCategoryId=:feedbackCategoryId")
     List<Feedback> findFeedbackByCategoryId(Long feedbackCategoryId);
+
+    @Query("SELECT f FROM Feedback f WHERE f.feedbackAuthor.userId=:userId")
+    List<Feedback> findFeedbackByFeedbackAuthorId(Long userId);
 
 }

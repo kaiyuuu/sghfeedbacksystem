@@ -7,10 +7,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackRoleEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.CannotDeleteFeedbackUnderReviewException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackNotFoundException;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.StaffNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.Local;
@@ -18,6 +15,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component("loader")
 public class DataLoader implements CommandLineRunner {
@@ -53,6 +53,7 @@ public class DataLoader implements CommandLineRunner {
             loadStaff();
             loadFeedback();
         }
+        testServices();
     }
 
     public void loadFeedbackSubCategories() {
@@ -174,5 +175,45 @@ public class DataLoader implements CommandLineRunner {
         } catch (FeedbackNotFoundException | CannotDeleteFeedbackUnderReviewException exception) {
             System.out.println("something went wrong while deleting feedback");
         }
+    }
+
+    public void testServices() {
+
+    LocalDateTime start = LocalDateTime.of(2015,
+                Month.JULY, 29, 19, 30, 40);
+    LocalDateTime end = LocalDateTime.now();
+    List<Feedback> feebackByDate = feedbackService.findAllFeedbackByDate(start, end);
+    List<Feedback> feebackByCategory = feedbackService.findFeedbackByCategory(1L);
+    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(11L);
+    List<Feedback> feedbackUnderReview = feedbackService.findFeedbacksUnderReview();
+        System.out.println("feebackByDate ::");
+        for(Feedback f : feebackByDate) {
+        System.out.println(f.getFeedbackTitle());
+        }
+        System.out.println("feebackByCategory ::");
+        for(Feedback f : feebackByCategory) {
+            System.out.println(f.getFeedbackTitle());
+        }
+        System.out.println("feebackBySubCategory ::");
+        for(Feedback f : feebackBySubCategory) {
+            System.out.println(f.getFeedbackTitle());
+        }
+        System.out.println("feedbackUnderReview ::");
+        for(Feedback f : feedbackUnderReview) {
+            System.out.println(f.getFeedbackTitle());
+        }
+        try {
+        List<Feedback> feedbackByAuthor = feedbackService.findFeedbackByAuthor(1L);
+            System.out.println("feedbackByAuthor ::");
+            for(Feedback f : feedbackByAuthor) {
+                System.out.println(f.getFeedbackTitle());
+            }
+
+        } catch (UserNotFoundException exception) {
+        System.out.println("somethign wenet wrong in finding feedback by author");
+    }
+
+
+
     }
 }
