@@ -1,9 +1,10 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.data;
 
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
+import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackRoleEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,10 +13,17 @@ import org.springframework.stereotype.Component;
 @Component("loader")
 public class DataLoader implements CommandLineRunner {
 
+
+    @Autowired
+    private FeedbackSubCategoryRepository feedbackSubCategoryRepository;
     @Autowired
     private FeedbackCategoryService feedbackCategoryService;
     @Autowired
     private FeedbackSubCategoryService feedbackSubCategoryService;
+    @Autowired
+    private StaffRepository staffRepository;
+    @Autowired
+    private FeedbackTeamRepository feedbackTeamRepository;
 
     public DataLoader() {
     }
@@ -31,6 +39,7 @@ public class DataLoader implements CommandLineRunner {
         if(feedbackCategoryService.findAllFeedbackCategory().isEmpty()) {
             loadFeedbackCategories();
             loadFeedbackSubCategories();
+            loadStaff();
         }
     }
 
@@ -96,6 +105,32 @@ public class DataLoader implements CommandLineRunner {
         feedbackCategoryService.saveFeedbackCategory(process);
         feedbackCategoryService.saveFeedbackCategory(newIdeas);
         feedbackCategoryService.saveFeedbackCategory(others);
+
+    }
+
+    public void loadStaff() {
+        FeedbackSubCategory department1 = feedbackSubCategoryRepository.getReferenceById(1L);
+        FeedbackSubCategory department2 = feedbackSubCategoryRepository.getReferenceById(2L);
+        FeedbackSubCategory department3 = feedbackSubCategoryRepository.getReferenceById(3L);
+
+
+        Staff staff1 = new Staff(new String("garyOng"),new String("gary"),new String("ong"),
+                new String("gary.ong.b.k@sgh.com.sg"), new String("password"),new String("Assistance Director"),
+                new String("Wel-Being and Division of Medicine"));
+
+        Staff staff2 = new Staff(new String("euniceTan"),new String("eunice"),new String("ong"),
+                new String("eunice.tan.h.y@sgh.com.sg"), new String("password"),new String("Manager"),
+                "Wel-Being and Division of Medicine");
+
+        Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
+                new String("sachin.ajayan@gmail.com"), new String("password"),new String("Scrum Master"),
+                "IT");
+        User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", FeedbackRoleEnum.PROCESSOWNER);
+
+        staffRepository.save(staff1);
+        staffRepository.save(staff2);
+        staffRepository.save(staff3);
+        feedbackTeamRepository.save(feedbackTeam);
 
     }
 }

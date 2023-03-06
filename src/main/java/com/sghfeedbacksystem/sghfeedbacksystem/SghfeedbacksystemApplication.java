@@ -19,21 +19,21 @@ public class SghfeedbacksystemApplication {
 		ConfigurableApplicationContext configurableApplicationContext =
 				SpringApplication.run(SghfeedbacksystemApplication.class, args);
 
-		UserRepository staffRepository =
-				configurableApplicationContext.getBean(StaffRepository.class);
-
-		UserRepository feedbackTeamRepository =
-				configurableApplicationContext.getBean(FeedbackTeamRepository.class);
-
-		User staff =
-				new Staff("sach_ok", "sachin", "ajayan", "sachin@gmail.com", "sachinlovesmen69", "assistant nurse", "Nursing");
-
-		User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", FeedbackRoleEnum.PROCESSOWNER);
-
-		staffRepository.save(staff);
-		feedbackTeamRepository.save(feedbackTeam);
-
-		staffRepository.delete(staff);
+//		UserRepository staffRepository =
+//				configurableApplicationContext.getBean(StaffRepository.class);
+//
+//		UserRepository feedbackTeamRepository =
+//				configurableApplicationContext.getBean(FeedbackTeamRepository.class);
+//
+//		User staff =
+//				new Staff("sach_ok", "sachin", "ajayan", "sachin@gmail.com", "sachinlovesmen69", "assistant nurse", "Nursing");
+//
+//		User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", FeedbackRoleEnum.PROCESSOWNER);
+//
+//		staffRepository.save(staff);
+//		feedbackTeamRepository.save(feedbackTeam);
+//
+//		staffRepository.delete(staff);
 
 
 	}
