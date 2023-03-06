@@ -20,11 +20,11 @@ public interface FeedbackService {
     //for PO
     List<Feedback> findFeedbackByCategory(Long categoryId);
     List<Feedback> findFeedbackBySubCategory(Long subCategoryId);
+    Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
 
     //for staff
     List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException;
     List<Feedback> findFeedbacksUnderReview();
-     Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
      Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
      Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
 
