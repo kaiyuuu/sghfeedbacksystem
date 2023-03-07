@@ -18,7 +18,7 @@ public class FeedbackResponse {
     private LocalDateTime feedbackResponseDate;
 
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
