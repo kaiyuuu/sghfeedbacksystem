@@ -76,24 +76,59 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practices", "heres the description...");
         FeedbackSubCategory workplaceCulture = new FeedbackSubCategory("Workplace Culture", "heres the description...");
 
+        FeedbackSubCategory software = new FeedbackSubCategory("Software", "heres the description...");
+        FeedbackSubCategory hardwareIT = new FeedbackSubCategory("Hardware", "heres the description...");
+
+        FeedbackSubCategory businessOffice = new FeedbackSubCategory("Business Office", "heres the description...");
+        FeedbackSubCategory operatingTheatre = new FeedbackSubCategory("Operating Theatre", "heres the description...");
+        FeedbackSubCategory outpatientClinics = new FeedbackSubCategory("Hardware", "heres the description...");
+        FeedbackSubCategory ILEC = new FeedbackSubCategory("ILEC", "heres the description...");
+        FeedbackSubCategory AEC = new FeedbackSubCategory("AEC", "heres the description...");
+
+        FeedbackSubCategory health = new FeedbackSubCategory("Health", "heres the description...");
+        FeedbackSubCategory family = new FeedbackSubCategory("Family", "heres the description...");
+        FeedbackSubCategory workTransformations = new FeedbackSubCategory("Work Transformations", "heres the description...");
+        FeedbackSubCategory kindness = new FeedbackSubCategory("Kindness", "heres the description...");
+        FeedbackSubCategory others = new FeedbackSubCategory("Others", "heres the description...");
+
+        FeedbackSubCategory titleAndFreeText = new FeedbackSubCategory("Health", "heres the description...");
+
+
+
         try {
-            feedbackSubCategoryService.saveFeedbackSubCategory(room, new Long(1));
-            feedbackSubCategoryService.saveFeedbackSubCategory(restrooms, new Long(1));
-            feedbackSubCategoryService.saveFeedbackSubCategory(staff, new Long(1));
-            feedbackSubCategoryService.saveFeedbackSubCategory(pantry, new Long(1));
-            feedbackSubCategoryService.saveFeedbackSubCategory(bins, new Long(1));
+            feedbackSubCategoryService.saveFeedbackSubCategory(room, 1L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(restrooms, 1L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(staff, 1L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(pantry, 1L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(bins, 1L);
 
-            feedbackSubCategoryService.saveFeedbackSubCategory(biomedical, new Long(2));
-            feedbackSubCategoryService.saveFeedbackSubCategory(hardware, new Long(2));
-            feedbackSubCategoryService.saveFeedbackSubCategory(plumbingSanitation, new Long(2));
+            feedbackSubCategoryService.saveFeedbackSubCategory(biomedical,2L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(hardware, 2L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(plumbingSanitation, 2L);
 
-            feedbackSubCategoryService.saveFeedbackSubCategory(staffBenefits, new Long(3));
-            feedbackSubCategoryService.saveFeedbackSubCategory(harrassment, new Long(3));
-            feedbackSubCategoryService.saveFeedbackSubCategory(bullying, new Long(3));
-            feedbackSubCategoryService.saveFeedbackSubCategory(workArrangements, new Long(3));
-            feedbackSubCategoryService.saveFeedbackSubCategory(unfairPractices, new Long(3));
-            feedbackSubCategoryService.saveFeedbackSubCategory(workplaceCulture, new Long(3));
+            feedbackSubCategoryService.saveFeedbackSubCategory(staffBenefits, 3L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(harrassment, 3L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(bullying, 3L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(workArrangements,3L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(unfairPractices,3L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(workplaceCulture, 3L);
 
+            feedbackSubCategoryService.saveFeedbackSubCategory(software, 4L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(hardwareIT, 4L);
+
+            feedbackSubCategoryService.saveFeedbackSubCategory(businessOffice, 5L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(operatingTheatre, 5L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(outpatientClinics, 5L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(ILEC, 5L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(AEC, 5L);
+
+            feedbackSubCategoryService.saveFeedbackSubCategory(health, 6L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(family, 6L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(workTransformations, 6L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(kindness, 6L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(others, 6L);
+
+            feedbackSubCategoryService.saveFeedbackSubCategory(titleAndFreeText, 7L);
         } catch (FeedbackCategoryNotFoundException exception) {
             System.out.println("sth went wrong in loading feedback subcategories");
         }
@@ -159,6 +194,7 @@ public class DataLoader implements CommandLineRunner {
         Feedback feedback2 = new Feedback(new String ("Boss bully alert"),
                 new String("my boss sachin ajayan has been asking us to buy coffee for him 3 times a day everyday"),
                 Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+        feedback2.setPublished(true);
         Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
                 new String("Dummy feedback"),
                 Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);

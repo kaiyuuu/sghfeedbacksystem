@@ -13,4 +13,7 @@ public interface FeedbackSubCategoryRepository extends JpaRepository<FeedbackSub
     @Query("SELECT f FROM Feedback f WHERE f.feedbackSubCategory.feedbackSubCategoryId=:feedbackSubCategoryId")
     List<Feedback> findAllFeedbackBySubCategory(Long feedbackSubCategoryId);
 
+    @Query("SELECT f FROM FeedbackSubCategory f WHERE f.feedbackCategory.feedbackCategoryId=:feedbackCategoryId")
+    List<FeedbackSubCategory> findAllFeedbackSubcategoryByFeedbackCategoryId(Long feedbackCategoryId);
+
 }

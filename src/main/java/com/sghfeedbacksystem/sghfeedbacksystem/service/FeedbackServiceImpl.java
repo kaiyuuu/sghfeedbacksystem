@@ -63,7 +63,6 @@ public class FeedbackServiceImpl implements FeedbackService{
     //not tested
     @Override
     public List<Feedback> findFeedbacksUnderReview() {
-
         List<Feedback> allFeedback = feedbackRepository.findAll();
         return allFeedback.stream().filter(x ->
                 x.getFeedbackStatus().equals(FeedbackStatusEnum.REVIEWING))
@@ -71,6 +70,21 @@ public class FeedbackServiceImpl implements FeedbackService{
 
     }
 
+    //not tested
+    @Override
+    public List<Feedback> findFeedbacksSubmitted() {
+        List<Feedback> allFeedback = feedbackRepository.findAll();
+        return allFeedback.stream().filter(x ->
+                x.getFeedbackStatus().equals(FeedbackStatusEnum.SUBMITTED))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Feedback> findFeedbacksPublished() {
+        List<Feedback> allFeedback = feedbackRepository.findAll();
+        return allFeedback.stream().filter(x -> x.getPublished())
+                .collect(Collectors.toList());
+    }
 
     @Override
     public Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory feedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException{

@@ -25,8 +25,13 @@ public interface FeedbackService {
     //for staff
     List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException;
     List<Feedback> findFeedbacksUnderReview();
-     Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
+    List<Feedback> findFeedbacksSubmitted();
+    List<Feedback> findFeedbacksPublished();
+
+
+    Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
      Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
+
 
 
 }

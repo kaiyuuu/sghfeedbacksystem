@@ -14,6 +14,8 @@ public interface FeedbackCategoryService {
 
     public List<FeedbackCategory> findAllFeedbackCategory();
 
+    public Map<String, List<String>> findAllCategoriesAndSubCategories();
+
     public FeedbackCategory findFeedbackCategoryById(Long feedbackCategoryId) throws FeedbackCategoryNotFoundException;
 
     public FeedbackCategory saveFeedbackCategory(FeedbackCategory feedbackCategory);

@@ -22,6 +22,8 @@ public class Feedback {
     private LocalDateTime feedbackDate;
     @Column(nullable = false)
     private FeedbackStatusEnum feedbackStatus;
+    @Column(nullable = false)
+    private Boolean isPublished;
 
     @ManyToOne
     @JoinColumn(name = "feedbackSubCategory")
@@ -40,6 +42,7 @@ public class Feedback {
         this.isAnonymous = isAnonymous;
         this.feedbackDate = feedbackDate;
         this.feedbackStatus = feedbackStatus;
+        this.isPublished = false;
     }
 
     public Long getFeedbackId() {
@@ -104,5 +107,13 @@ public class Feedback {
 
     public void setFeedbackAuthor(Staff feedbackAuthor) {
         this.feedbackAuthor = feedbackAuthor;
+    }
+
+    public Boolean getPublished() {
+        return isPublished;
+    }
+
+    public void setPublished(Boolean published) {
+        isPublished = published;
     }
 }

@@ -4,6 +4,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackCategoryRepository;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackSubCategoryRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
 import jdk.internal.net.http.common.Pair;
@@ -19,6 +20,8 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
 
     @Autowired
     private FeedbackCategoryRepository feedbackCategoryRepository;
+    @Autowired
+    private FeedbackSubCategoryRepository feedbackSubCategoryRepository;
     @Autowired
     private FeedbackService feedbackService;
 
@@ -37,6 +40,24 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
 
     public FeedbackCategory saveFeedbackCategory(FeedbackCategory feedbackCategory) {
         return feedbackCategoryRepository.save(feedbackCategory);
+    }
+
+    @Override
+    public Map<String, List<String>> findAllCategoriesAndSubCategories() {
+
+        Map<String, List<String>> map = new HashMap<>();
+        List<FeedbackCategory> categories = findAllFeedbackCategory();
+        for(FeedbackCategory f : categories) {
+            //find all subCat under this cat
+            List<FeedbackSubCategory> subCategories = feedbackSubCategoryRepository
+                    .findAllFeedbackSubcategoryByFeedbackCategoryId(f.getFeedbackCategoryId());
+            List<String> subCategoryNames = new ArrayList<>();
+            for(FeedbackSubCategory subCategory : subCategories) {
+                subCategoryNames.add(subCategory.getFeedbackSubcategoryName());
+            }
+            map.put(f.getFeedbackCategoryName() ,subCategoryNames);
+        }
+        return map;
     }
 
     //finds top 3 categories where feedback were given most within the given time frame
