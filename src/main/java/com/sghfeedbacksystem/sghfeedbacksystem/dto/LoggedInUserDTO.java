@@ -1,37 +1,26 @@
-package com.sghfeedbacksystem.sghfeedbacksystem.model;
+package com.sghfeedbacksystem.sghfeedbacksystem.dto;
 
-import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
-import jakarta.persistence.*;
+public class LoggedInUserDTO {
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
     private Long userId;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private String position;
+    private String userEnum;
 
-    @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum userRole;
-
-
-    public User() {
+    public LoggedInUserDTO() {
     }
 
-    public User(String username, String firstName, String lastName, String email, String password, String position, UserRoleEnum userRole) {
+    public LoggedInUserDTO(Long userId, String username, String firstName, String lastName, String email, String password, String userEnum) {
+        this.userId = userId;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.position = position;
-        this.userRole = userRole;
+        this.userEnum = userEnum;
     }
 
     public Long getUserId() {
@@ -82,19 +71,11 @@ public class User {
         this.password = password;
     }
 
-    public String getPosition() {
-        return position;
+    public String getUserEnum() {
+        return userEnum;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public UserRoleEnum getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRoleEnum userRole) {
-        this.userRole = userRole;
+    public void setUserEnum(String userEnum) {
+        this.userEnum = userEnum;
     }
 }

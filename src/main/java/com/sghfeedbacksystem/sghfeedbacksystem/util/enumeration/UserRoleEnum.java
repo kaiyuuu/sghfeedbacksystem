@@ -1,8 +1,9 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration;
 
-public enum FeedbackRoleEnum {
+public enum UserRoleEnum {
 
     ADMIN,
     
-    PROCESSOWNER
+    PROCESSOWNER,
+    STAFF
 }

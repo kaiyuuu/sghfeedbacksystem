@@ -22,6 +22,10 @@ public class FeedbackResponse {
     @JoinColumn(name = "feedbackId")
     private Feedback feedback;
 
+    @ManyToOne
+    @JoinColumn(name = "feedbackResponseAuthor")
+    private FeedbackTeam feedbackResponseAuthor;
+
     public FeedbackResponse() {
     }
 
@@ -69,5 +73,13 @@ public class FeedbackResponse {
 
     public void setFeedback(Feedback feedback) {
         this.feedback = feedback;
+    }
+
+    public FeedbackTeam getFeedbackResponseAuthor() {
+        return feedbackResponseAuthor;
+    }
+
+    public void setFeedbackResponseAuthor(FeedbackTeam feedbackResponseAuthor) {
+        this.feedbackResponseAuthor = feedbackResponseAuthor;
     }
 }

@@ -17,6 +17,10 @@ public class FeedbackSubCategory {
     @JoinColumn(name = "feedbackCategoryId")
     private FeedbackCategory feedbackCategory;
 
+    @OneToOne
+    @JoinColumn(name = "feedbackSubCategoryPo")
+    private FeedbackTeam feedbackSubCategoryPo;
+
     public FeedbackSubCategory() {
     }
 
@@ -55,5 +59,21 @@ public class FeedbackSubCategory {
 
     public void setFeedbackCategory(FeedbackCategory feedbackCategory) {
         this.feedbackCategory = feedbackCategory;
+    }
+
+    public Long getFeedbackSubCategoryId() {
+        return feedbackSubCategoryId;
+    }
+
+    public void setFeedbackSubCategoryId(Long feedbackSubCategoryId) {
+        this.feedbackSubCategoryId = feedbackSubCategoryId;
+    }
+
+    public FeedbackTeam getFeedbackSubCategoryPo() {
+        return feedbackSubCategoryPo;
+    }
+
+    public void setFeedbackSubCategoryPo(FeedbackTeam feedbackSubCategoryPo) {
+        this.feedbackSubCategoryPo = feedbackSubCategoryPo;
     }
 }

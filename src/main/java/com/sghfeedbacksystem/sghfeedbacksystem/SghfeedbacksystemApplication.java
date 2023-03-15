@@ -6,7 +6,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.model.User;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackTeamRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.StaffRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.UserRepository;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackRoleEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

@@ -5,8 +5,8 @@ import com.sghfeedbacksystem.sghfeedbacksystem.repository.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
-import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackRoleEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -164,16 +164,16 @@ public class DataLoader implements CommandLineRunner {
 
         Staff staff1 = new Staff(new String("garyOng"),new String("gary"),new String("ong"),
                 new String("gary.ong.b.k@sgh.com.sg"), new String("password"),new String("Assistance Director"),
-                new String("Wel-Being and Division of Medicine"));
+                UserRoleEnum.STAFF);
 
         Staff staff2 = new Staff(new String("euniceTan"),new String("eunice"),new String("ong"),
                 new String("eunice.tan.h.y@sgh.com.sg"), new String("password"),new String("Manager"),
-                "Wel-Being and Division of Medicine");
+                UserRoleEnum.STAFF);
 
         Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
                 new String("sachin.ajayan@gmail.com"), new String("password"),new String("Scrum Master"),
-                "IT");
-        User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", FeedbackRoleEnum.PROCESSOWNER);
+                UserRoleEnum.STAFF);
+        User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
 
         staffRepository.save(staff1);
         staffRepository.save(staff2);
