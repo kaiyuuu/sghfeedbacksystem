@@ -60,7 +60,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("loading feedback subcategories...");
 
         FeedbackSubCategory room = new FeedbackSubCategory("Room", "heres the description...");
-        FeedbackSubCategory restrooms = new FeedbackSubCategory("Restroms", "heres the description...");
+        FeedbackSubCategory restrooms = new FeedbackSubCategory("Restrooms", "heres the description...");
         FeedbackSubCategory staff = new FeedbackSubCategory("Staff", "heres the description...");
         FeedbackSubCategory pantry = new FeedbackSubCategory("Pantry", "heres the description...");
         FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
@@ -70,7 +70,7 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory plumbingSanitation = new FeedbackSubCategory("Plumbing and Sanitation", "heres the description...");
 
         FeedbackSubCategory staffBenefits = new FeedbackSubCategory("Staff Benefits", "heres the description...");
-        FeedbackSubCategory harrassment = new FeedbackSubCategory("Harrassment & Abuse", "heres the description...");
+        FeedbackSubCategory harrassment = new FeedbackSubCategory("Harassment & Abuse", "heres the description...");
         FeedbackSubCategory bullying = new FeedbackSubCategory("Bullying", "heres the description...");
         FeedbackSubCategory workArrangements = new FeedbackSubCategory("Work Arrangements", "heres the description...");
         FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practices", "heres the description...");

@@ -21,7 +21,7 @@ public interface FeedbackService {
     List<Feedback> findFeedbackByCategory(Long categoryId);
     List<Feedback> findFeedbackBySubCategory(Long subCategoryId);
     Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
-
+    Feedback publishFeedback(Long feedbackId);
     //for staff
     List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException;
     List<Feedback> findFeedbacksUnderReview();

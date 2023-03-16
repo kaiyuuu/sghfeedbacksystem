@@ -3,6 +3,7 @@ package com.sghfeedbacksystem.sghfeedbacksystem.controller;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -27,7 +29,7 @@ public class FeedbackController {
     @GetMapping("/getPublishedFeedbacks")
     public ResponseEntity<List<Feedback>> getPublishedFeedback() throws Exception {
         try {
-            List<Feedback> publishedFeedbacks = removePasswordFromFeedback(feedbackService.findFeedbacksPublished());
+            List<Feedback> publishedFeedbacks = removePasswordFromFeedbacks(feedbackService.findFeedbacksPublished());
             return new ResponseEntity<List<Feedback>>(publishedFeedbacks, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,17 +46,26 @@ public class FeedbackController {
         }
     }
 
-    @PostMapping("/publishFeedback")
-    public ResponseEntity<Feedback> publishFeedback(Long feedbackId) {
-        return null;
+    @PutMapping("/publishFeedback/{feedbackId}")
+    public ResponseEntity<Feedback> publishFeedback(@PathVariable("feedbackId") Long feedbackId) {
+        Feedback publishedFeedback = feedbackService.publishFeedback(feedbackId);
+        publishedFeedback = removePasswordFromFeedback(publishedFeedback);
+        return new ResponseEntity<Feedback>(publishedFeedback, HttpStatus.OK);
     }
 
-    public List<Feedback> removePasswordFromFeedback(List<Feedback> feedbacks) {
+    public List<Feedback> removePasswordFromFeedbacks(List<Feedback> feedbacks) {
+        List<Feedback> updatedFeedbacks = new ArrayList<>();
         for (Feedback f : feedbacks) {
-            f.getFeedbackAuthor().setPassword("");
-            f.getFeedbackSubCategory().setFeedbackSubCategoryDescription("");
-            f.getFeedbackSubCategory().getFeedbackCategory().setFeedbackCategoryDescription("");
+            updatedFeedbacks.add(removePasswordFromFeedback(f));
         }
-        return feedbacks;
+        return updatedFeedbacks;
     }
+
+    public Feedback removePasswordFromFeedback(Feedback feedback) {
+        feedback.getFeedbackAuthor().setPassword("");
+        feedback.getFeedbackSubCategory().setFeedbackSubCategoryDescription("");
+        feedback.getFeedbackSubCategory().getFeedbackCategory().setFeedbackCategoryDescription("");
+        return feedback;
+    }
+
 }

@@ -132,4 +132,11 @@ public class FeedbackServiceImpl implements FeedbackService{
             throw new FeedbackNotFoundException();
         }
     }
+
+    @Override
+    public Feedback publishFeedback(Long feedbackId) {
+        Feedback feedback = feedbackRepository.findById(feedbackId).get();
+        feedback.setPublished(true);
+        return feedbackRepository.save(feedback);
+    }
 }
