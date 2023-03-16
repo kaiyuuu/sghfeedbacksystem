@@ -4,15 +4,15 @@ public class LoggedInUserRequestDTO {
 
     public String password;
     public String username;
-    private String userEnum;
+    //private String userEnum;
 
     public LoggedInUserRequestDTO() {
     }
 
-    public LoggedInUserRequestDTO(String password, String username, String userEnum) {
+    public LoggedInUserRequestDTO(String password, String username) {
         this.password = password;
         this.username = username;
-        this.userEnum = userEnum;
+        //this.userEnum = userEnum;
     }
 
     public String getPassword() {
@@ -31,11 +31,11 @@ public class LoggedInUserRequestDTO {
         this.username = username;
     }
 
-    public String getUserEnum() {
-        return userEnum;
-    }
-
-    public void setUserEnum(String userEnum) {
-        this.userEnum = userEnum;
-    }
+//    public String getUserEnum() {
+//        return userEnum;
+//    }
+//
+//    public void setUserEnum(String userEnum) {
+//        this.userEnum = userEnum;
+//    }
 }

@@ -36,22 +36,24 @@ public class LoginServiceImpl implements LoginService{
         LoggedInUserDTO retrievedUser = new LoggedInUserDTO();
         if (userService.findUserByUsername(username) != null) {
             User user = userService.findUserByUsername(username);
+//            System.out.println("this is is the user's password " + user.getPassword());
+//            System.out.println("this is is the user's first name " + user.getFirstName());
             String userEnum = "";
-            if (retrievedUser.getUserEnum().equals(UserRoleEnum.STAFF)) {
+            if (user.getUserRole().equals(UserRoleEnum.STAFF)) {
                 userEnum = "STAFF";
-            } else if (retrievedUser.getUserEnum().equals(UserRoleEnum.ADMIN)) {
+            } else if (user.getUserRole().equals(UserRoleEnum.ADMIN)) {
                 userEnum = "ADMIN";
-            } else if (retrievedUser.getUserEnum().equals(UserRoleEnum.PROCESSOWNER)) {
+            } else if (user.getUserRole().equals(UserRoleEnum.PROCESSOWNER)) {
                 userEnum = "PROCESSOWNER";
             }
 
             retrievedUser = new LoggedInUserDTO(
-                    retrievedUser.getUserId(),
-                    retrievedUser.getUsername(),
-                    retrievedUser.getFirstName(),
-                    retrievedUser.getLastName(),
-                    retrievedUser.getEmail(),
-                    retrievedUser.getPassword(),
+                    user.getUserId(),
+                    user.getUsername(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getPassword(),
                     userEnum);
         }
         return retrievedUser;
