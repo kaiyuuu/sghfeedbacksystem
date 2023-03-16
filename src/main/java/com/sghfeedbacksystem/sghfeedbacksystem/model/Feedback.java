@@ -36,12 +36,12 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(String feedbackTitle, String feedbackBody, Boolean isAnonymous, LocalDateTime feedbackDate, FeedbackStatusEnum feedbackStatus) {
+    public Feedback(String feedbackTitle, String feedbackBody, Boolean isAnonymous, LocalDateTime feedbackDate) {
         this.feedbackTitle = feedbackTitle;
         this.feedbackBody = feedbackBody;
         this.isAnonymous = isAnonymous;
         this.feedbackDate = feedbackDate;
-        this.feedbackStatus = feedbackStatus;
+        this.feedbackStatus = FeedbackStatusEnum.SUBMITTED;
         this.isPublished = false;
     }
 

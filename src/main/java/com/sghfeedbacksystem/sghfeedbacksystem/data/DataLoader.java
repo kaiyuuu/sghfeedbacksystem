@@ -190,14 +190,14 @@ public class DataLoader implements CommandLineRunner {
 
         Feedback feedback1 = new Feedback(new String ("Broken Sink"),
                 new String("The sink at level 2 men's toilet is broken pls fix :("),
-                Boolean.FALSE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+                Boolean.FALSE, LocalDateTime.now());
         Feedback feedback2 = new Feedback(new String ("Boss bully alert"),
                 new String("my boss sachin ajayan has been asking us to buy coffee for him 3 times a day everyday"),
-                Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+                Boolean.TRUE, LocalDateTime.now());
         feedback2.setPublished(true);
         Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
                 new String("Dummy feedback"),
-                Boolean.TRUE, LocalDateTime.now(), FeedbackStatusEnum.SUBMITTED);
+                Boolean.TRUE, LocalDateTime.now());
         try {
             feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
             feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);

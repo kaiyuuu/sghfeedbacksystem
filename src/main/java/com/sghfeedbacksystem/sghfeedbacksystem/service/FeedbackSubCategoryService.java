@@ -11,6 +11,8 @@ import java.util.Map;
 
 public interface FeedbackSubCategoryService {
 
+    public FeedbackSubCategory findFeedbackSubCategoryByName(String feedbackSubCategory);
+
     public FeedbackSubCategory saveFeedbackSubCategory(FeedbackSubCategory feedbackSubCategory, Long feedbackCategoryId) throws FeedbackCategoryNotFoundException;
 
     //find number of times each subcategory is tagged for all feedbacks submitted within given time frame

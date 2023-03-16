@@ -1,20 +1,22 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.controller;
 
-import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
+import com.sghfeedbacksystem.sghfeedbacksystem.dto.FeedbackDTO;
+import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.UserService;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.StaffNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestController
 @RequestMapping("/feedback")
@@ -25,6 +27,10 @@ public class FeedbackController {
     FeedbackService feedbackService;
     @Autowired
     FeedbackCategoryService feedbackCategoryService;
+    @Autowired
+    FeedbackSubCategoryService feedbackSubCategoryService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/getPublishedFeedbacks")
     public ResponseEntity<List<Feedback>> getPublishedFeedback() throws Exception {
@@ -51,6 +57,21 @@ public class FeedbackController {
         Feedback publishedFeedback = feedbackService.publishFeedback(feedbackId);
         publishedFeedback = removePasswordFromFeedback(publishedFeedback);
         return new ResponseEntity<Feedback>(publishedFeedback, HttpStatus.OK);
+    }
+
+    @PostMapping("/createFeedback")
+    public ResponseEntity<Feedback> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
+        LocalDateTime today = LocalDateTime.now();
+        try {
+            Staff author = (Staff) userService.findUserById(feedbackDTO.getUserID());
+            Feedback feedbackToCreate = new Feedback(feedbackDTO.getTitle(), feedbackDTO.getFeedback(), feedbackDTO.getAnonymity(), today);
+            FeedbackSubCategory feedbackSubCategory = feedbackSubCategoryService.findFeedbackSubCategoryByName(feedbackDTO.getSubcategory());
+            Feedback createdFeedback = feedbackService.saveFeedback(author, feedbackToCreate, feedbackSubCategory);
+            return new ResponseEntity<Feedback>(createdFeedback, HttpStatus.OK);
+//         Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory feedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException
+        } catch (StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public List<Feedback> removePasswordFromFeedbacks(List<Feedback> feedbacks) {
