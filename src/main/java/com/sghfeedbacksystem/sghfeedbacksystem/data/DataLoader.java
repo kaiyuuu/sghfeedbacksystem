@@ -49,8 +49,9 @@ public class DataLoader implements CommandLineRunner {
 
         if(feedbackCategoryService.findAllFeedbackCategory().isEmpty()) {
             loadFeedbackCategories();
-            loadFeedbackSubCategories();
             loadStaff();
+            loadFeedbackSubCategories();
+
             loadFeedback();
         }
         testServices();
@@ -61,6 +62,7 @@ public class DataLoader implements CommandLineRunner {
 
         FeedbackSubCategory room = new FeedbackSubCategory("Room", "heres the description...");
         FeedbackSubCategory restrooms = new FeedbackSubCategory("Restrooms", "heres the description...");
+        restrooms.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
         FeedbackSubCategory staff = new FeedbackSubCategory("Staff", "heres the description...");
         FeedbackSubCategory pantry = new FeedbackSubCategory("Pantry", "heres the description...");
         FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
@@ -72,6 +74,7 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory staffBenefits = new FeedbackSubCategory("Staff Benefits", "heres the description...");
         FeedbackSubCategory harrassment = new FeedbackSubCategory("Harassment & Abuse", "heres the description...");
         FeedbackSubCategory bullying = new FeedbackSubCategory("Bullying", "heres the description...");
+        bullying.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(5L).get());
         FeedbackSubCategory workArrangements = new FeedbackSubCategory("Work Arrangements", "heres the description...");
         FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practices", "heres the description...");
         FeedbackSubCategory workplaceCulture = new FeedbackSubCategory("Workplace Culture", "heres the description...");
@@ -157,9 +160,12 @@ public class DataLoader implements CommandLineRunner {
     }
 
     public void loadStaff() {
-        FeedbackSubCategory department1 = feedbackSubCategoryRepository.getReferenceById(1L);
-        FeedbackSubCategory department2 = feedbackSubCategoryRepository.getReferenceById(2L);
-        FeedbackSubCategory department3 = feedbackSubCategoryRepository.getReferenceById(3L);
+//        FeedbackSubCategory department1 = feedbackSubCategoryRepository.getReferenceById(1L);
+//        FeedbackSubCategory department2 = feedbackSubCategoryRepository.getReferenceById(2L);
+//        FeedbackSubCategory department3 = feedbackSubCategoryRepository.getReferenceById(3L);
+
+//        FeedbackSubCategory restrooms = feedbackSubCategoryRepository.getReferenceById(2L);
+//        FeedbackSubCategory bullying = feedbackSubCategoryRepository.getReferenceById(11L);
 
 
         Staff staff1 = new Staff(new String("garyOng"),new String("gary"),new String("ong"),
@@ -173,12 +179,22 @@ public class DataLoader implements CommandLineRunner {
         Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
                 new String("sachin.ajayan@gmail.com"), new String("password"),new String("Scrum Master"),
                 UserRoleEnum.STAFF);
-        User feedbackTeam = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam1 = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
+
+        FeedbackTeam feedbackTeam2 = new FeedbackTeam("jackalJockey", "chia", "jackie", "jackie@yahoo.com.sg", "ilovetojack", "Head Accountant", UserRoleEnum.PROCESSOWNER);
+
 
         staffRepository.save(staff1);
         staffRepository.save(staff2);
         staffRepository.save(staff3);
-        feedbackTeamRepository.save(feedbackTeam);
+//        restrooms.setFeedbackSubCategoryPo( feedbackTeam1);
+//        bullying.setFeedbackSubCategoryPo(feedbackTeam2);
+        feedbackTeamRepository.save(feedbackTeam1);
+        feedbackTeamRepository.save(feedbackTeam2);
+//        feedbackSubCategoryRepository.save(restrooms);
+//        feedbackSubCategoryRepository.save(bullying);
+
+
 
     }
 

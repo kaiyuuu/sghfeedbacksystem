@@ -29,6 +29,7 @@ public class FeedbackSubCategory {
         this.feedbackSubCategoryDescription = feedbackSubCategoryDescription;
     }
 
+
     public Long getSubCategoryId() {
         return feedbackSubCategoryId;
     }
