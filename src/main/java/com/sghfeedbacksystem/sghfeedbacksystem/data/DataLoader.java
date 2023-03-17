@@ -84,7 +84,7 @@ public class DataLoader implements CommandLineRunner {
 
         FeedbackSubCategory businessOffice = new FeedbackSubCategory("Business Office", "heres the description...");
         FeedbackSubCategory operatingTheatre = new FeedbackSubCategory("Operating Theatre", "heres the description...");
-        FeedbackSubCategory outpatientClinics = new FeedbackSubCategory("Hardware", "heres the description...");
+        FeedbackSubCategory outpatientClinics = new FeedbackSubCategory("Outpatient Clinics", "heres the description...");
         FeedbackSubCategory ILEC = new FeedbackSubCategory("ILEC", "heres the description...");
         FeedbackSubCategory AEC = new FeedbackSubCategory("AEC", "heres the description...");
 
