@@ -11,9 +11,9 @@ public interface FeedbackResponseService {
      FeedbackResponse findFeedbackResponseByFeedbackId(Long feedbackId);
      List<FeedbackResponse> findAllFeedbackResponseByAuthorId(Long feedbackResponseAuthorId) throws UserNotFoundException;
 
-     FeedbackResponse acceptFeedback(Long feedbackId, String feedbackResponseBody);
+     FeedbackResponse acceptFeedback(Long feedbackId, String feedbackResponseBody, Boolean isPublished);
 
-     FeedbackResponse rejectFeedback(Long feedbackId, String feedbackResponseBody);
+     FeedbackResponse rejectFeedback(Long feedbackId, String feedbackResponseBody, Boolean isPublished);
 
      FeedbackResponse createFeedback(Feedback feedback, String feedbackResponseBody);
 

@@ -5,6 +5,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackResponseService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.UserService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +40,14 @@ public class FeedbackResponseController {
     }
 
     @PostMapping("/accept/{feedbackId}")
-    public ResponseEntity<FeedbackResponse> acceptFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody) {
-        FeedbackResponse feedbackResponse = feedbackResponseService.acceptFeedback(feedbackId, feedbackResponseBody);
+    public ResponseEntity<FeedbackResponse> acceptFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody,  @RequestBody Boolean isPublished) {
+        FeedbackResponse feedbackResponse = feedbackResponseService.acceptFeedback(feedbackId, feedbackResponseBody, isPublished);
         return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
     }
 
     @PostMapping("/reject/{feedbackId}")
-    public ResponseEntity<FeedbackResponse> rejectFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody) {
-        FeedbackResponse feedbackResponse = feedbackResponseService.rejectFeedback(feedbackId, feedbackResponseBody);
+    public ResponseEntity<FeedbackResponse> rejectFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody, @RequestBody Boolean isPublished) {
+        FeedbackResponse feedbackResponse = feedbackResponseService.rejectFeedback(feedbackId, feedbackResponseBody, isPublished);
         return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
     }
 

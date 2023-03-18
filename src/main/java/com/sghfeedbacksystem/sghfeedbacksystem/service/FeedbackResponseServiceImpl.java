@@ -41,18 +41,28 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
     }
 
     @Override
-    public FeedbackResponse acceptFeedback(Long feedbackId, String feedbackResponseBody) {
+    public FeedbackResponse acceptFeedback(Long feedbackId, String feedbackResponseBody, Boolean isPublished) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setFeedbackStatus(FeedbackStatusEnum.REVIEWING);
+        if (isPublished.equals(true)) {
+            feedback.setPublished(true);
+        } else if (isPublished.equals(false)) {
+            feedback.setPublished(false);
+        }
         FeedbackResponse feedbackResponse = createFeedback(feedback, feedbackResponseBody);
 
         return feedbackResponse;
     }
 
     @Override
-    public FeedbackResponse rejectFeedback(Long feedbackId, String feedbackResponseBody) {
+    public FeedbackResponse rejectFeedback(Long feedbackId, String feedbackResponseBody, Boolean isPublished) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setFeedbackStatus(FeedbackStatusEnum.CLOSED);
+        if (isPublished.equals(true)) {
+            feedback.setPublished(true);
+        } else if (isPublished.equals(false)) {
+            feedback.setPublished(false);
+        }
         FeedbackResponse feedbackResponse = createFeedback(feedback, feedbackResponseBody);
 
         return feedbackResponse;
