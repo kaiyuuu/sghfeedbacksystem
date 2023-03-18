@@ -1,5 +1,6 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.controller;
 
+import com.sghfeedbacksystem.sghfeedbacksystem.dto.ResponseBodyPublishStatusDTO;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackResponseService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
@@ -40,14 +41,14 @@ public class FeedbackResponseController {
     }
 
     @PostMapping("/accept/{feedbackId}")
-    public ResponseEntity<FeedbackResponse> acceptFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody,  @RequestBody Boolean isPublished) {
-        FeedbackResponse feedbackResponse = feedbackResponseService.acceptFeedback(feedbackId, feedbackResponseBody, isPublished);
+    public ResponseEntity<FeedbackResponse> acceptFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
+        FeedbackResponse feedbackResponse = feedbackResponseService.acceptFeedback(feedbackId, responseBodyPublishStatusDTO);
         return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
     }
 
     @PostMapping("/reject/{feedbackId}")
-    public ResponseEntity<FeedbackResponse> rejectFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody String feedbackResponseBody, @RequestBody Boolean isPublished) {
-        FeedbackResponse feedbackResponse = feedbackResponseService.rejectFeedback(feedbackId, feedbackResponseBody, isPublished);
+    public ResponseEntity<FeedbackResponse> rejectFeedback (@PathVariable("feedbackId") Long feedbackId, @RequestBody ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
+        FeedbackResponse feedbackResponse = feedbackResponseService.rejectFeedback(feedbackId, responseBodyPublishStatusDTO);
         return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
     }
 
