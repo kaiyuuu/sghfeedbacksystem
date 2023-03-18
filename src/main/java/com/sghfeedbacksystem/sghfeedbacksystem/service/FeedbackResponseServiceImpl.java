@@ -43,7 +43,7 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
     @Override
     public FeedbackResponse acceptFeedback(Long feedbackId, String feedbackResponseBody) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
-        feedback.setFeedbackStatus(FeedbackStatusEnum.CLOSED);
+        feedback.setFeedbackStatus(FeedbackStatusEnum.REVIEWING);
         FeedbackResponse feedbackResponse = createFeedback(feedback, feedbackResponseBody);
 
         return feedbackResponse;
@@ -52,7 +52,7 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
     @Override
     public FeedbackResponse rejectFeedback(Long feedbackId, String feedbackResponseBody) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
-        feedback.setFeedbackStatus(FeedbackStatusEnum.REVIEWING);
+        feedback.setFeedbackStatus(FeedbackStatusEnum.CLOSED);
         FeedbackResponse feedbackResponse = createFeedback(feedback, feedbackResponseBody);
 
         return feedbackResponse;

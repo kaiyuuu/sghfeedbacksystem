@@ -87,6 +87,11 @@ public class FeedbackServiceImpl implements FeedbackService{
     }
 
     @Override
+    public Feedback findFeedbackById(Long feedbackId) {
+        return feedbackRepository.findById(feedbackId).get();
+    }
+
+    @Override
     public Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory feedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException{
 
         Optional<User> managedStaff = staffRepository.findById(staff.getUserId());

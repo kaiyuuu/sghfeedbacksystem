@@ -28,6 +28,8 @@ public interface FeedbackService {
     List<Feedback> findFeedbacksSubmitted();
     List<Feedback> findFeedbacksPublished();
 
+    Feedback findFeedbackById(Long feedbackId);
+
 
     Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
      Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
