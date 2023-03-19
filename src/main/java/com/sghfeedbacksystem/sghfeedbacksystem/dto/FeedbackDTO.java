@@ -1,18 +1,23 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.dto;
 
+import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackResponse;
+
 public class FeedbackDTO {
 
     private Long userID;
+    private String author;
     private String category;
     private String subcategory;
     private Boolean anonymity;
     private String title;
     private String feedback;
+    private FeedbackResponse feedbackResponse;
     //(userID : Long?, category : String, subcategory : String, anonymity : Boolean, title : String, feedback : String)
 
 
-    public FeedbackDTO(Long userID, String category, String subcategory, Boolean anonymity, String title, String feedback) {
+    public FeedbackDTO(Long userID, String author, String category, String subcategory, Boolean anonymity, String title, String feedback) {
         this.userID = userID;
+        this.author = author;
         this.category = category;
         this.subcategory = subcategory;
         this.anonymity = anonymity;
@@ -66,5 +71,21 @@ public class FeedbackDTO {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public FeedbackResponse getFeedbackResponse() {
+        return feedbackResponse;
+    }
+
+    public void setFeedbackResponse(FeedbackResponse feedbackResponse) {
+        this.feedbackResponse = feedbackResponse;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

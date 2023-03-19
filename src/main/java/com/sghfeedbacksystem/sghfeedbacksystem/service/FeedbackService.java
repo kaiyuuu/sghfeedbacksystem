@@ -32,7 +32,7 @@ public interface FeedbackService {
 
 
     Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
-     Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
+    Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
 
 
 

@@ -3,6 +3,7 @@ package com.sghfeedbacksystem.sghfeedbacksystem.data;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackResponseService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
@@ -31,6 +32,8 @@ public class DataLoader implements CommandLineRunner {
     private FeedbackSubCategoryService feedbackSubCategoryService;
     @Autowired
     private FeedbackService feedbackService;
+    @Autowired
+    private FeedbackResponseService feedbackResponseService;
     @Autowired
     private StaffRepository staffRepository;
     @Autowired
@@ -214,19 +217,23 @@ public class DataLoader implements CommandLineRunner {
         Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
                 new String("Dummy feedback"),
                 Boolean.TRUE, LocalDateTime.now());
+//        String feedbackResponseTitle, String feedbackResponseBody, LocalDateTime feedbackResponseDate
+        FeedbackResponse feedbackResponse1 = new FeedbackResponse("ok noted", "ok i see whr u coming from", LocalDateTime.now());
         try {
             feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
             feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);
             feedbackService.saveFeedback((Staff) staff2, feedback3, feedbackSubCategory2);
+            Feedback savedFeedback = feedbackService.findFeedbackById(1L);
+            feedbackResponseService.createFeedback(savedFeedback, "ok noted");
         } catch(StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
             System.out.println("something went wrong while loading feedback");
         }
 
-        try {
-            feedbackService.deleteFeedback(3L);
-        } catch (FeedbackNotFoundException | CannotDeleteFeedbackUnderReviewException exception) {
-            System.out.println("something went wrong while deleting feedback");
-        }
+//        try {
+//            feedbackService.deleteFeedback(3L);
+//        } catch (FeedbackNotFoundException | CannotDeleteFeedbackUnderReviewException exception) {
+//            System.out.println("something went wrong while deleting feedback");
+//        }
     }
 
     public void testServices() {

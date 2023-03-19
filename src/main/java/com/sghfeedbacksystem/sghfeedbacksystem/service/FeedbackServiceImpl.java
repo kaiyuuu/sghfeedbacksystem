@@ -53,10 +53,7 @@ public class FeedbackServiceImpl implements FeedbackService{
     @Override
     public List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException {
 
-        if(staffRepository.findById(userId).get() == null) {
-            throw new UserNotFoundException();
-        }
-
+        Staff staff = (Staff) staffRepository.findById(userId).get();
         return feedbackRepository.findFeedbackByFeedbackAuthorId(userId);
     }
 
