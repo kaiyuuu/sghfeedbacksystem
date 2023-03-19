@@ -58,7 +58,6 @@ public class FeedbackController {
             List<Feedback> feedbacks = feedbackService.findFeedbackByAuthor(userId);
             List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
             for(Feedback f : feedbacks) {
-//FeedbackDTO(Long userID, String category, String subcategory, Boolean anonymity, String title, String feedback) {
                     FeedbackDTO feedbackDTO = new FeedbackDTO(userId,f.getFeedbackAuthor().getUsername(),
                             f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
                             f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
@@ -81,8 +80,10 @@ public class FeedbackController {
     @DeleteMapping("/deleteFeedback/{feedbackId}")
     public ResponseEntity<Long> deleteFeedback(@PathVariable("feedbackId") Long feedbackId) {
         try {
+            FeedbackResponse response = feedbackResponseService.findFeedbackResponseByFeedbackId(feedbackId);
             return new ResponseEntity<Long>(feedbackService.deleteFeedback(feedbackId), HttpStatus.OK);
         } catch (FeedbackNotFoundException | CannotDeleteFeedbackUnderReviewException exception) {
+            System.out.println("cannot delete feedback under review");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
