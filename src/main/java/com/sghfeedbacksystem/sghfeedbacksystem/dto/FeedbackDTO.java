@@ -1,6 +1,7 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.dto;
 
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackResponse;
+import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 
 public class FeedbackDTO {
 
@@ -11,11 +12,12 @@ public class FeedbackDTO {
     private Boolean anonymity;
     private String title;
     private String feedback;
+    private String feedbackStatus;
     private FeedbackResponse feedbackResponse;
     //(userID : Long?, category : String, subcategory : String, anonymity : Boolean, title : String, feedback : String)
 
 
-    public FeedbackDTO(Long userID, String author, String category, String subcategory, Boolean anonymity, String title, String feedback) {
+    public FeedbackDTO(Long userID, String author, String category, String subcategory, Boolean anonymity, String title, String feedback, FeedbackStatusEnum feedbackStatus) {
         this.userID = userID;
         this.author = author;
         this.category = category;
@@ -23,6 +25,7 @@ public class FeedbackDTO {
         this.anonymity = anonymity;
         this.title = title;
         this.feedback = feedback;
+        this.feedbackStatus = feedbackStatus.toString();
     }
 
     public Long getUserID() {
@@ -87,5 +90,13 @@ public class FeedbackDTO {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getFeedbackStatus() {
+        return feedbackStatus;
+    }
+
+    public void setFeedbackStatus(String feedbackStatus) {
+        this.feedbackStatus = feedbackStatus;
     }
 }

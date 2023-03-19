@@ -8,10 +8,12 @@ import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEn
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import jdk.internal.net.http.common.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -61,7 +63,8 @@ public class FeedbackController {
                     FeedbackDTO feedbackDTO = new FeedbackDTO(userId,f.getFeedbackAuthor().getUsername(),
                             f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
                             f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
-                            f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody());
+                            f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(),
+                            f.getFeedbackStatus());
                     FeedbackResponse feedbackResponse = feedbackResponseService.findFeedbackResponseByFeedbackId(f.getFeedbackId());
                     if(feedbackResponse != null) {
                         feedbackResponse.setFeedback(null);
@@ -76,7 +79,29 @@ public class FeedbackController {
         }
     }
 
-    //not tested
+    @GetMapping("/getAllFeedback")
+    public ResponseEntity<List<FeedbackDTO>> getAllFeedback() {
+        List<Feedback> feedbacks = feedbackService.findAllFeedbackByDate(LocalDateTime.MIN, LocalDateTime.now());
+        List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
+        for (Feedback f : feedbacks) {
+            FeedbackDTO feedbackDTO = new FeedbackDTO(f.getFeedbackAuthor().getUserId(),
+                    f.getFeedbackAuthor().getUsername(),
+                    f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
+                    f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
+                    f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(), f.getFeedbackStatus());
+            FeedbackResponse feedbackResponse = feedbackResponseService.findFeedbackResponseByFeedbackId(f.getFeedbackId());
+            if (feedbackResponse != null) {
+                feedbackResponse.setFeedback(null);
+                feedbackResponse.getFeedbackResponseAuthor().setPassword(null);
+                feedbackDTO.setFeedbackResponse(feedbackResponse);
+            }
+            feedbackDTOS.add(feedbackDTO);
+        }
+        return new ResponseEntity<List<FeedbackDTO>>(feedbackDTOS, HttpStatus.OK);
+    }
+
+
+
     @DeleteMapping("/deleteFeedback/{feedbackId}")
     public ResponseEntity<Long> deleteFeedback(@PathVariable("feedbackId") Long feedbackId) {
         try {
