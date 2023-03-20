@@ -60,7 +60,7 @@ public class FeedbackController {
             List<Feedback> feedbacks = feedbackService.findFeedbackByAuthor(userId);
             List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
             for(Feedback f : feedbacks) {
-                    FeedbackDTO feedbackDTO = new FeedbackDTO(userId,f.getFeedbackAuthor().getUsername(),
+                    FeedbackDTO feedbackDTO = new FeedbackDTO(userId,f.getFeedbackId(), f.getFeedbackAuthor().getUsername(),
                             f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
                             f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
                             f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(),
@@ -85,6 +85,7 @@ public class FeedbackController {
         List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
         for (Feedback f : feedbacks) {
             FeedbackDTO feedbackDTO = new FeedbackDTO(f.getFeedbackAuthor().getUserId(),
+                    f.getFeedbackId(),
                     f.getFeedbackAuthor().getUsername(),
                     f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
                     f.getFeedbackSubCategory().getFeedbackSubcategoryName(),

@@ -6,6 +6,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEn
 public class FeedbackDTO {
 
     private Long userID;
+    private Long feedbackId;
     private String author;
     private String category;
     private String subcategory;
@@ -17,8 +18,9 @@ public class FeedbackDTO {
     //(userID : Long?, category : String, subcategory : String, anonymity : Boolean, title : String, feedback : String)
 
 
-    public FeedbackDTO(Long userID, String author, String category, String subcategory, Boolean anonymity, String title, String feedback, FeedbackStatusEnum feedbackStatus) {
+    public FeedbackDTO(Long userID,Long feedbackId, String author, String category, String subcategory, Boolean anonymity, String title, String feedback, FeedbackStatusEnum feedbackStatus) {
         this.userID = userID;
+        this.feedbackId = feedbackId;
         this.author = author;
         this.category = category;
         this.subcategory = subcategory;
@@ -98,5 +100,13 @@ public class FeedbackDTO {
 
     public void setFeedbackStatus(String feedbackStatus) {
         this.feedbackStatus = feedbackStatus;
+    }
+
+    public Long getFeedbackId() {
+        return feedbackId;
+    }
+
+    public void setFeedbackId(Long feedbackId) {
+        this.feedbackId = feedbackId;
     }
 }
