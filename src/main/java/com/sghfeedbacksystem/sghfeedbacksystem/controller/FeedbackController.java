@@ -34,10 +34,15 @@ public class FeedbackController {
     UserService userService;
 
     @GetMapping("/getPublishedFeedbacks")
-    public ResponseEntity<List<Feedback>> getPublishedFeedback() throws Exception {
+    public ResponseEntity<List<FeedbackDTO>> getPublishedFeedback() throws Exception {
         try {
             List<Feedback> publishedFeedbacks = removePasswordFromFeedbacks(feedbackService.findFeedbacksPublished());
-            return new ResponseEntity<List<Feedback>>(publishedFeedbacks, HttpStatus.OK);
+            List<FeedbackDTO> publishedFeedbackDTOs = new ArrayList<>();
+            for(Feedback f : publishedFeedbacks) {
+                FeedbackDTO feedbackDTO = convertFeedbackToFeedbackDTO(f);
+                publishedFeedbackDTOs.add(feedbackDTO);
+            }
+            return new ResponseEntity<List<FeedbackDTO>>(publishedFeedbackDTOs, HttpStatus.OK);
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -64,6 +69,7 @@ public class FeedbackController {
                             f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
                             f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
                             f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(),
+                            f.getFeedbackDate().toString(),
                             f.getFeedbackStatus());
                     FeedbackResponse feedbackResponse = feedbackResponseService.findFeedbackResponseByFeedbackId(f.getFeedbackId());
                     if(feedbackResponse != null) {
@@ -84,24 +90,11 @@ public class FeedbackController {
         List<Feedback> feedbacks = feedbackService.findAllFeedbackByDate(LocalDateTime.MIN, LocalDateTime.now());
         List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
         for (Feedback f : feedbacks) {
-            FeedbackDTO feedbackDTO = new FeedbackDTO(f.getFeedbackAuthor().getUserId(),
-                    f.getFeedbackId(),
-                    f.getFeedbackAuthor().getUsername(),
-                    f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
-                    f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
-                    f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(), f.getFeedbackStatus());
-            FeedbackResponse feedbackResponse = feedbackResponseService.findFeedbackResponseByFeedbackId(f.getFeedbackId());
-            if (feedbackResponse != null) {
-                feedbackResponse.setFeedback(null);
-                feedbackResponse.getFeedbackResponseAuthor().setPassword(null);
-                feedbackDTO.setFeedbackResponse(feedbackResponse);
-            }
+            FeedbackDTO feedbackDTO = convertFeedbackToFeedbackDTO(f);
             feedbackDTOS.add(feedbackDTO);
         }
         return new ResponseEntity<List<FeedbackDTO>>(feedbackDTOS, HttpStatus.OK);
     }
-
-
 
     @DeleteMapping("/deleteFeedback/{feedbackId}")
     public ResponseEntity<Long> deleteFeedback(@PathVariable("feedbackId") Long feedbackId) {
@@ -115,14 +108,15 @@ public class FeedbackController {
     }
 
     @PutMapping("/publishFeedback/{feedbackId}")
-    public ResponseEntity<Feedback> publishFeedback(@PathVariable("feedbackId") Long feedbackId) {
+    public ResponseEntity<FeedbackDTO> publishFeedback(@PathVariable("feedbackId") Long feedbackId) {
         Feedback publishedFeedback = feedbackService.publishFeedback(feedbackId);
         publishedFeedback = removePasswordFromFeedback(publishedFeedback);
-        return new ResponseEntity<Feedback>(publishedFeedback, HttpStatus.OK);
+        FeedbackDTO feedbackDTO = convertFeedbackToFeedbackDTO(publishedFeedback);
+        return new ResponseEntity<FeedbackDTO>(feedbackDTO, HttpStatus.OK);
     }
 
     @PostMapping("/createFeedback")
-    public ResponseEntity<Feedback> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
+    public ResponseEntity<FeedbackDTO> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         LocalDateTime today = LocalDateTime.now();
         try {
             Staff author = (Staff) userService.findUserById(feedbackDTO.getUserID());
@@ -130,8 +124,8 @@ public class FeedbackController {
             FeedbackSubCategory feedbackSubCategory = feedbackSubCategoryService.findFeedbackSubCategoryByName(feedbackDTO.getSubcategory());
             Feedback createdFeedback = feedbackService.saveFeedback(author, feedbackToCreate, feedbackSubCategory);
             createdFeedback = removePasswordFromFeedback(createdFeedback);
-            return new ResponseEntity<Feedback>(createdFeedback, HttpStatus.OK);
-//         Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory feedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException
+            FeedbackDTO createdFeedbackDTO = convertFeedbackToFeedbackDTO(createdFeedback);
+            return new ResponseEntity<FeedbackDTO>(createdFeedbackDTO, HttpStatus.OK);
         } catch (StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -150,6 +144,23 @@ public class FeedbackController {
         feedback.getFeedbackSubCategory().setFeedbackSubCategoryDescription("");
         feedback.getFeedbackSubCategory().getFeedbackCategory().setFeedbackCategoryDescription("");
         return feedback;
+    }
+
+    public FeedbackDTO convertFeedbackToFeedbackDTO(Feedback f) {
+        FeedbackDTO feedbackDTO = new FeedbackDTO(f.getFeedbackAuthor().getUserId(),
+                f.getFeedbackId(),
+                f.getFeedbackAuthor().getUsername(),
+                f.getFeedbackSubCategory().getFeedbackCategory().getFeedbackCategoryName(),
+                f.getFeedbackSubCategory().getFeedbackSubcategoryName(),
+                f.getAnonymous(), f.getFeedbackTitle(), f.getFeedbackBody(),f.getFeedbackDate().toString(),
+                f.getFeedbackStatus());
+        FeedbackResponse feedbackResponse = feedbackResponseService.findFeedbackResponseByFeedbackId(f.getFeedbackId());
+        if (feedbackResponse != null) {
+            feedbackResponse.setFeedback(null);
+            feedbackResponse.getFeedbackResponseAuthor().setPassword(null);
+            feedbackDTO.setFeedbackResponse(feedbackResponse);
+        }
+        return feedbackDTO;
     }
 
 }

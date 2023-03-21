@@ -14,11 +14,25 @@ public class FeedbackDTO {
     private String title;
     private String feedback;
     private String feedbackStatus;
+    private String feedbackDate;
     private FeedbackResponse feedbackResponse;
     //(userID : Long?, category : String, subcategory : String, anonymity : Boolean, title : String, feedback : String)
 
 
-    public FeedbackDTO(Long userID,Long feedbackId, String author, String category, String subcategory, Boolean anonymity, String title, String feedback, FeedbackStatusEnum feedbackStatus) {
+    public FeedbackDTO() {
+    }
+
+    public FeedbackDTO(Long userID, String category, String subcategory, Boolean anonymity, String title, String feedback) {
+        this();
+        this.userID = userID;
+        this.category = category;
+        this.subcategory = subcategory;
+        this.anonymity = anonymity;
+        this.title = title;
+        this.feedback = feedback;
+    }
+
+    public FeedbackDTO(Long userID, Long feedbackId, String author, String category, String subcategory, Boolean anonymity, String title, String feedback, String feedbackDate, FeedbackStatusEnum feedbackStatus) {
         this.userID = userID;
         this.feedbackId = feedbackId;
         this.author = author;
@@ -27,6 +41,7 @@ public class FeedbackDTO {
         this.anonymity = anonymity;
         this.title = title;
         this.feedback = feedback;
+        this.feedbackDate = feedbackDate;
         this.feedbackStatus = feedbackStatus.toString();
     }
 
@@ -108,5 +123,13 @@ public class FeedbackDTO {
 
     public void setFeedbackId(Long feedbackId) {
         this.feedbackId = feedbackId;
+    }
+
+    public String getFeedbackDate() {
+        return feedbackDate;
+    }
+
+    public void setFeedbackDate(String feedbackDate) {
+        this.feedbackDate = feedbackDate;
     }
 }
