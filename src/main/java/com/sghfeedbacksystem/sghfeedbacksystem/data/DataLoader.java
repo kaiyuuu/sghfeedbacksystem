@@ -186,6 +186,8 @@ public class DataLoader implements CommandLineRunner {
 
         FeedbackTeam feedbackTeam2 = new FeedbackTeam("jackalJockey", "chia", "jackie", "jackie@yahoo.com.sg", "ilovetojack", "Head Accountant", UserRoleEnum.PROCESSOWNER);
 
+        FeedbackTeam feedbackTeam3 = new FeedbackTeam("yiaJingLim", "lim", "jiaYing", "jiaying@yahoo.com.sg", "ilovehealthcare", "Admin", UserRoleEnum.ADMIN);
+
 
         staffRepository.save(staff1);
         staffRepository.save(staff2);
@@ -194,6 +196,7 @@ public class DataLoader implements CommandLineRunner {
 //        bullying.setFeedbackSubCategoryPo(feedbackTeam2);
         feedbackTeamRepository.save(feedbackTeam1);
         feedbackTeamRepository.save(feedbackTeam2);
+        feedbackTeamRepository.save(feedbackTeam3);
 //        feedbackSubCategoryRepository.save(restrooms);
 //        feedbackSubCategoryRepository.save(bullying);
 
