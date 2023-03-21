@@ -17,7 +17,7 @@ public interface FeedbackResponseService {
 
      FeedbackResponse rejectFeedback(Long feedbackId, ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO);
 
-     FeedbackResponse createFeedback(Feedback feedback, String feedbackResponseBody);
+     FeedbackResponse createFeedbackResponse(Feedback feedback, String feedbackResponseBody);
 
      //need to call email service to notify staff
 //     FeedbackResponse saveFeedbackResponse(FeedbackResponse feedbackResponse, Feedback feedback, FeedbackTeam feedbackResponseAuthor);

@@ -52,7 +52,7 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
         } else if (responseBodyPublishStatusDTO.getPublishStatus().equals(false)) {
             feedback.setPublished(false);
         }
-        FeedbackResponse feedbackResponse = createFeedback(feedback, responseBodyPublishStatusDTO.getResponseBody());
+        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO.getResponseBody());
 
         return feedbackResponse;
     }
@@ -67,13 +67,13 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
         } else if (isPublished.equals(false)) {
             feedback.setPublished(false);
         }
-        FeedbackResponse feedbackResponse = createFeedback(feedback, responseBodyPublishStatusDTO.getResponseBody());
+        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO.getResponseBody());
 
         return feedbackResponse;
     }
 
     @Override
-    public FeedbackResponse createFeedback(Feedback feedback, String feedbackResponseBody) {
+    public FeedbackResponse createFeedbackResponse(Feedback feedback, String feedbackResponseBody) {
         FeedbackResponse newFeedbackResponse = new FeedbackResponse();
         newFeedbackResponse.setFeedbackResponseBody(feedbackResponseBody);
         newFeedbackResponse.setFeedbackResponseDate(LocalDateTime.now());
