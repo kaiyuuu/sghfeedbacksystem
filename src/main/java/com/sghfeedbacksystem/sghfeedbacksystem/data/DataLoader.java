@@ -227,7 +227,7 @@ public class DataLoader implements CommandLineRunner {
             feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
             feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);
             feedbackService.saveFeedback((Staff) staff2, feedback3, feedbackSubCategory2);
-            feedbackResponseService.acceptFeedback(1L, new ResponseBodyPublishStatusDTO("ok noted", true));
+            feedbackResponseService.acceptFeedback(1L, new ResponseBodyPublishStatusDTO("ok noted", true, ""));
         } catch(StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
             System.out.println("something went wrong while loading feedback");
         }

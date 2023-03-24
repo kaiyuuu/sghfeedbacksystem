@@ -47,12 +47,8 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
         System.out.println(responseBodyPublishStatusDTO.getPublishStatus());
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setFeedbackStatus(FeedbackStatusEnum.REVIEWING);
-        if (responseBodyPublishStatusDTO.getPublishStatus().equals(true)) {
-            feedback.setPublished(true);
-        } else if (responseBodyPublishStatusDTO.getPublishStatus().equals(false)) {
-            feedback.setPublished(false);
-        }
-        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO.getResponseBody());
+
+        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO);
 
         return feedbackResponse;
     }
@@ -61,21 +57,17 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
     public FeedbackResponse rejectFeedback(Long feedbackId, ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setFeedbackStatus(FeedbackStatusEnum.CLOSED);
-        Boolean isPublished = responseBodyPublishStatusDTO.getPublishStatus();
-        if (isPublished.equals(true)) {
-            feedback.setPublished(true);
-        } else if (isPublished.equals(false)) {
-            feedback.setPublished(false);
-        }
-        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO.getResponseBody());
+        updatePublishStatus(feedback, responseBodyPublishStatusDTO);
+        FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO);
 
         return feedbackResponse;
     }
 
     @Override
-    public FeedbackResponse createFeedbackResponse(Feedback feedback, String feedbackResponseBody) {
+    public FeedbackResponse createFeedbackResponse(Feedback feedback, ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
         FeedbackResponse newFeedbackResponse = new FeedbackResponse();
-        newFeedbackResponse.setFeedbackResponseBody(feedbackResponseBody);
+        newFeedbackResponse.setFeedbackResponseBody(responseBodyPublishStatusDTO.getResponseBody());
+        newFeedbackResponse.setRejectionReason(responseBodyPublishStatusDTO.getRejectionReason());
         newFeedbackResponse.setFeedbackResponseDate(LocalDateTime.now());
         newFeedbackResponse.setFeedbackResponseTitle("Response to feedback titled: " + feedback.getFeedbackTitle());
         newFeedbackResponse.setFeedbackResponseAuthor(feedback.getFeedbackSubCategory().getFeedbackSubCategoryPo());
@@ -85,4 +77,30 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
         feedbackResponseRepository.save(newFeedbackResponse);
         return newFeedbackResponse;
     }
+
+    @Override
+    public FeedbackResponse closeFeedbackUpdateResponse(Long feedbackId, ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
+        Feedback feedback = feedbackRepository.findById(feedbackId).get();
+        feedback.setFeedbackStatus(FeedbackStatusEnum.CLOSED);
+        updatePublishStatus(feedback, responseBodyPublishStatusDTO);
+        FeedbackResponse existingFeedbackResponse = findFeedbackResponseByFeedbackId(feedbackId);
+        existingFeedbackResponse.setFeedbackResponseBody(responseBodyPublishStatusDTO.getResponseBody());
+        existingFeedbackResponse.setFeedbackResponseTitle("(Updated) " + existingFeedbackResponse.getFeedbackResponseTitle());
+        existingFeedbackResponse.setFeedbackResponseDate(LocalDateTime.now());
+
+        feedbackRepository.save(feedback);
+        feedbackResponseRepository.save(existingFeedbackResponse);
+        return existingFeedbackResponse;
+    }
+
+    @Override
+    public void updatePublishStatus(Feedback feedback, ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
+        Boolean isPublished = responseBodyPublishStatusDTO.getPublishStatus();
+        if (isPublished.equals(true)) {
+            feedback.setPublished(true);
+        } else if (isPublished.equals(false)) {
+            feedback.setPublished(false);
+        }
+    }
+
 }

@@ -70,5 +70,11 @@ public class FeedbackResponseController {
         return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
     }
 
+    @PutMapping("/update/{feedbackId}")
+    public ResponseEntity<FeedbackResponse> closeFeedbackUpdateResponse (@PathVariable("feedbackId") Long feedbackId, @RequestBody ResponseBodyPublishStatusDTO responseBodyPublishStatusDTO) {
+        FeedbackResponse feedbackResponse = feedbackResponseService.closeFeedbackUpdateResponse(feedbackId, responseBodyPublishStatusDTO);
+        return new ResponseEntity<FeedbackResponse>(feedbackResponse, HttpStatus.OK);
+    }
+
 
 }

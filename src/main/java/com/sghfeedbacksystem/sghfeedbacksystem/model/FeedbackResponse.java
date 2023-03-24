@@ -17,6 +17,9 @@ public class FeedbackResponse {
     @Column(nullable = false)
     private LocalDateTime feedbackResponseDate;
 
+    @Column(nullable = false)
+    private String rejectionReason;
+
 
     @OneToOne
     @JoinColumn(name = "feedbackId")
@@ -33,6 +36,7 @@ public class FeedbackResponse {
         this.feedbackResponseTitle = feedbackResponseTitle;
         this.feedbackResponseBody = feedbackResponseBody;
         this.feedbackResponseDate = feedbackResponseDate;
+        this.rejectionReason = "";
     }
 
     public Long getFeedbackResponseId() {
@@ -65,6 +69,14 @@ public class FeedbackResponse {
 
     public void setFeedbackResponseDate(LocalDateTime feedbackResponseDate) {
         this.feedbackResponseDate = feedbackResponseDate;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
     }
 
     public Feedback getFeedback() {
