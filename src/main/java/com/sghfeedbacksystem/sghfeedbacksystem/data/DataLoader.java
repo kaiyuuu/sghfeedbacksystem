@@ -55,10 +55,9 @@ public class DataLoader implements CommandLineRunner {
             loadFeedbackCategories();
             loadStaff();
             loadFeedbackSubCategories();
-
             loadFeedback();
         }
-        testServices();
+//        testServices();
     }
 
     public void loadFeedbackSubCategories() {
