@@ -66,20 +66,19 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory room = new FeedbackSubCategory("Room", "heres the description...");
         FeedbackSubCategory restrooms = new FeedbackSubCategory("Restrooms", "heres the description...");
         restrooms.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
-        FeedbackSubCategory staff = new FeedbackSubCategory("Staff", "heres the description...");
-        FeedbackSubCategory pantry = new FeedbackSubCategory("Pantry", "heres the description...");
+        FeedbackSubCategory staffPantry = new FeedbackSubCategory("Staff Pantry", "heres the description...");
         FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
 
         FeedbackSubCategory biomedical = new FeedbackSubCategory("Biomedical", "heres the description...");
         FeedbackSubCategory hardware = new FeedbackSubCategory("Hardware", "heres the description...");
-        FeedbackSubCategory plumbingSanitation = new FeedbackSubCategory("Plumbing and Sanitation", "heres the description...");
+        FeedbackSubCategory plumbingSanitation = new FeedbackSubCategory("Plumbing & Sanitation", "heres the description...");
 
         FeedbackSubCategory staffBenefits = new FeedbackSubCategory("Staff Benefits", "heres the description...");
         FeedbackSubCategory harrassment = new FeedbackSubCategory("Harassment & Abuse", "heres the description...");
         FeedbackSubCategory bullying = new FeedbackSubCategory("Bullying", "heres the description...");
         bullying.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(5L).get());
         FeedbackSubCategory workArrangements = new FeedbackSubCategory("Work Arrangements", "heres the description...");
-        FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practices", "heres the description...");
+        FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practice", "heres the description...");
         FeedbackSubCategory workplaceCulture = new FeedbackSubCategory("Workplace Culture", "heres the description...");
 
         FeedbackSubCategory software = new FeedbackSubCategory("Software", "heres the description...");
@@ -97,15 +96,14 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory kindness = new FeedbackSubCategory("Kindness", "heres the description...");
         FeedbackSubCategory others = new FeedbackSubCategory("Others", "heres the description...");
 
-        FeedbackSubCategory titleAndFreeText = new FeedbackSubCategory("Health", "heres the description...");
+        FeedbackSubCategory titleAndFreeText = new FeedbackSubCategory("Title and free text", "heres the description...");
 
 
 
         try {
             feedbackSubCategoryService.saveFeedbackSubCategory(room, 1L);
             feedbackSubCategoryService.saveFeedbackSubCategory(restrooms, 1L);
-            feedbackSubCategoryService.saveFeedbackSubCategory(staff, 1L);
-            feedbackSubCategoryService.saveFeedbackSubCategory(pantry, 1L);
+            feedbackSubCategoryService.saveFeedbackSubCategory(staffPantry, 1L);
             feedbackSubCategoryService.saveFeedbackSubCategory(bins, 1L);
 
             feedbackSubCategoryService.saveFeedbackSubCategory(biomedical,2L);
