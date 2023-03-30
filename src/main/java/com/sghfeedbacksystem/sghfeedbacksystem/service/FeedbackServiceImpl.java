@@ -44,10 +44,16 @@ public class FeedbackServiceImpl implements FeedbackService{
         return feedbackRepository.findFeedbackByCategoryId(categoryId);
     }
 
-    //not tested
     @Override
     public List<Feedback> findFeedbackBySubCategory(Long subCategoryId) {
         return feedbackRepository.findFeedbackBySubCategoryId(subCategoryId);
+    }
+
+    @Override
+    public Feedback updateFeedbackSubcategory(Long feedbackId, Long subCategoryId) {
+        Feedback updatedFeedback = feedbackRepository.findById(feedbackId).get();
+        updatedFeedback.setFeedbackSubCategory(feedbackSubCategoryRepository.findById(subCategoryId).get());
+        return feedbackRepository.save(updatedFeedback);
     }
 
     @Override

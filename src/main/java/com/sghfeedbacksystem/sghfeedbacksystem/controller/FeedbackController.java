@@ -130,6 +130,16 @@ public class FeedbackController {
         }
     }
 
+    @PutMapping("/updateFeedbackSubcategory/{feedbackId}/{feedbackSubcategoryId}")
+    public ResponseEntity<FeedbackDTO> updateFeedbackSubcategory(@PathVariable("feedbackSubcategoryId") Long feedbackSubcategoryId,
+                                                                 @PathVariable("feedbackId") Long feedbackId) {
+        Feedback updatedFeedback = feedbackService.updateFeedbackSubcategory(feedbackId, feedbackSubcategoryId);
+        updatedFeedback = removePasswordFromFeedback(updatedFeedback);
+        FeedbackDTO feedbackDTO = convertFeedbackToFeedbackDTO(updatedFeedback);
+        return new ResponseEntity<FeedbackDTO>(feedbackDTO, HttpStatus.OK);
+    }
+
+
     public List<Feedback> removePasswordFromFeedbacks(List<Feedback> feedbacks) {
         List<Feedback> updatedFeedbacks = new ArrayList<>();
         for (Feedback f : feedbacks) {
