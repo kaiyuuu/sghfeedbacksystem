@@ -3,16 +3,14 @@ package com.sghfeedbacksystem.sghfeedbacksystem.data;
 import com.sghfeedbacksystem.sghfeedbacksystem.dto.ResponseBodyPublishStatusDTO;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.*;
-import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
-import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackResponseService;
-import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
-import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackSubCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.cglib.core.Local;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -40,15 +38,23 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private FeedbackTeamRepository feedbackTeamRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public DataLoader() {
     }
 
     @Override
     public void run(String... args) throws Exception {
         System.out.println("i <3 healthcare");
+        //runScheduler();
         loadData();
     }
 
+    /*@Scheduled(fixedDelay = 10)
+    public void runScheduler() {
+        emailService.dailyEmailUpdate();
+    }*/
     public void loadData() {
 
         if(feedbackCategoryService.findAllFeedbackCategory().isEmpty()) {
@@ -173,11 +179,11 @@ public class DataLoader implements CommandLineRunner {
 
 
         Staff staff1 = new Staff(new String("garyOng"),new String("gary"),new String("ong"),
-                new String("gary.ong.b.k@sgh.com.sg"), new String("password"),new String("Assistance Director"),
+                new String("jackyseah99@gmail.com"), new String("password"),new String("Assistance Director"),
                 UserRoleEnum.STAFF);
 
         Staff staff2 = new Staff(new String("euniceTan"),new String("eunice"),new String("ong"),
-                new String("eunice.tan.h.y@sgh.com.sg"), new String("password"),new String("Manager"),
+                new String("dreamtobehotstuffeverynightsin@gmail.com"), new String("password"),new String("Manager"),
                 UserRoleEnum.STAFF);
 
         Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
