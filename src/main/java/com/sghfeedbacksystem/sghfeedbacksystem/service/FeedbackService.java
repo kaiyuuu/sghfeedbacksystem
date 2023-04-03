@@ -1,9 +1,6 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.service;
 
-import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackResponse;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackSubCategory;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.Staff;
+import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
@@ -22,6 +19,7 @@ public interface FeedbackService {
     List<Feedback> findFeedbackBySubCategory(Long subCategoryId);
     Feedback updateFeedbackStatus(Long feedbackId, FeedbackStatusEnum feedbackStatus) throws FeedbackNotFoundException;
     Feedback publishFeedback(Long feedbackId);
+    Feedback updateFeedbackSubcategory(Long feedbackId,Long subCategoryId);
     //for staff
     List<Feedback> findFeedbackByAuthor(Long userId) throws UserNotFoundException;
     List<Feedback> findFeedbacksUnderReview();

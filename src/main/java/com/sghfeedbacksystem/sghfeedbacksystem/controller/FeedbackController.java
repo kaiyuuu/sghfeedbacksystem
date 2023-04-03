@@ -6,7 +6,6 @@ import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.*;
-import jdk.internal.net.http.common.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
@@ -130,6 +129,16 @@ public class FeedbackController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/updateFeedbackSubcategory/{feedbackId}/{feedbackSubcategoryId}")
+    public ResponseEntity<FeedbackDTO> updateFeedbackSubcategory(@PathVariable("feedbackSubcategoryId") Long feedbackSubcategoryId,
+                                                                 @PathVariable("feedbackId") Long feedbackId) {
+        Feedback updatedFeedback = feedbackService.updateFeedbackSubcategory(feedbackId, feedbackSubcategoryId);
+        updatedFeedback = removePasswordFromFeedback(updatedFeedback);
+        FeedbackDTO feedbackDTO = convertFeedbackToFeedbackDTO(updatedFeedback);
+        return new ResponseEntity<FeedbackDTO>(feedbackDTO, HttpStatus.OK);
+    }
+
 
     public List<Feedback> removePasswordFromFeedbacks(List<Feedback> feedbacks) {
         List<Feedback> updatedFeedbacks = new ArrayList<>();
