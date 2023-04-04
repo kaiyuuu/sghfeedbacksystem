@@ -213,7 +213,7 @@ public class DataLoader implements CommandLineRunner {
         User staff1 = staffRepository.findById(1L).get();
         User staff2 = staffRepository.findById(2L).get();
         FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(2L).get();
-        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(11L).get();
+        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(10L).get();
 
         Feedback feedback1 = new Feedback(new String ("Broken Sink"),
                 new String("The sink at level 2 men's toilet is broken pls fix :("),
@@ -250,7 +250,7 @@ public class DataLoader implements CommandLineRunner {
     LocalDateTime end = LocalDateTime.now();
     List<Feedback> feebackByDate = feedbackService.findAllFeedbackByDate(start, end);
     List<Feedback> feebackByCategory = feedbackService.findFeedbackByCategory(1L);
-    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(11L);
+    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(10L);
     List<Feedback> feedbackUnderReview = feedbackService.findFeedbacksUnderReview();
         System.out.println("feebackByDate ::");
         for(Feedback f : feebackByDate) {
