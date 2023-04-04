@@ -47,14 +47,15 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("i <3 healthcare");
-        //runScheduler();
+        runScheduler();
         loadData();
     }
 
-    /*@Scheduled(fixedDelay = 10)
+    //@Scheduled(fixedDelay = 100)
+    @Scheduled(cron = "0 0 8 * * *")
     public void runScheduler() {
         emailService.dailyEmailUpdate();
-    }*/
+    }
     public void loadData() {
 
         if(feedbackCategoryService.findAllFeedbackCategory().isEmpty()) {

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,4 +21,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
     @Query("SELECT f FROM Feedback f WHERE f.feedbackAuthor.userId=:userId")
     List<Feedback> findFeedbackByFeedbackAuthorId(Long userId);
+
+    @Query("SELECT f FROM Feedback f WHERE f.feedbackDate >=:localDateTime")
+    List<Feedback> findFeedbackByDateGreaterThan(LocalDateTime localDateTime);
 }

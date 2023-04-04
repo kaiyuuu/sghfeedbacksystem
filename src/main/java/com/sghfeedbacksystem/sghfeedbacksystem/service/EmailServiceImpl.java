@@ -1,15 +1,16 @@
 package com.sghfeedbacksystem.sghfeedbacksystem.service;
 
-import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.Staff;
+import com.sghfeedbacksystem.sghfeedbacksystem.model.*;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackSubCategoryRepository;
+import com.sghfeedbacksystem.sghfeedbacksystem.repository.UserRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import com.sghfeedbacksystem.sghfeedbacksystem.model.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     FeedbackRepository feedbackRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public void sendEmail(String to, String subject, String body) {
@@ -54,7 +58,6 @@ public class EmailServiceImpl implements EmailService {
         }
         else if (statusChange.equals("reject")) {
             body = "Feedback ID " + feedbackId +  ": Status Changed from: SUBMITTED to CLOSED";
-            sendEmail(to, subject, body);
         }
         else {
             body = "Feedback ID " + feedbackId +  ": Status Changed from: REVIEWING to CLOSED";
@@ -64,25 +67,50 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void dailyEmailUpdate() {
-        System.out.println("Titties");
+        //System.out.println("Titties");
 
-        List<User> allUsers = userService.getAllUsers();
-        List<User> allPO = new ArrayList<>();
-        for (User user : allUsers) {
-            if (user.getUserRole() == UserRoleEnum.PROCESSOWNER) {
-                allPO.add(user);
+        List<User> allPO = userRepository.findUsersByUserRole(UserRoleEnum.PROCESSOWNER);
+        Map<Long, Long> PO_ID = new HashMap<>();
+        for (User user : allPO) {
+            PO_ID.put(user.getUserId(), (long) 0);
+        }
+        LocalDateTime dateBefore1Day = LocalDateTime.now().minusDays(1);
+        List<Feedback> allFeedbacks = feedbackRepository.findFeedbackByDateGreaterThan(dateBefore1Day);
+        for (Feedback feedback : allFeedbacks) {
+            FeedbackSubCategory feedbackSubCategory = feedback.getFeedbackSubCategory();
+            FeedbackTeam feedbackPO = feedbackSubCategory.getFeedbackSubCategoryPo();
+            Long feedbackPO_ID = feedbackPO.getUserId();
+            PO_ID.put(feedbackPO_ID, PO_ID.get(feedbackPO_ID) + 1);
+        }
+
+        for (Map.Entry<Long,Long> entry : PO_ID.entrySet()) {
+            if (entry.getValue() != 0) {
+
+                String to = userRepository.findById(entry.getKey()).get().getEmail();
+                String subject = "New Feedbacks For You";
+                String message = "You have " + entry.getValue() + " new feedbacks to review!";
+                sendEmail(to, subject, message);
+                //System.out.println(entry.getKey() + " " + entry.getValue());
             }
         }
-        List<Long> PO_ID = new ArrayList<>();
-        for (User user: allPO) {
-            PO_ID.add(user.getUserId());
-        }
+        /*
+        for (long id : PO_ID) {
+            System.out.println(id);
+        }*/
+
+        /*
+        for (Feedback feedback : allFeedbacks) {
+            System.out.println(feedback.getFeedbackId());
+        }*/
+
+    }
+        /*
         Map<Long, Long> subCatPO = new HashMap<>();
         for (Long id : PO_ID) {
             Long subCat_ID = feedbackSubCategoryService.findFeedbackSubCategoryByFeedbackTeamUser(id).getSubCategoryId();
             subCatPO.put(subCat_ID, id);
 
-        }}
+        }}*/
 }
 /*
     dataloader app using runScheduler() (runs scheeduled app - configure timing)
