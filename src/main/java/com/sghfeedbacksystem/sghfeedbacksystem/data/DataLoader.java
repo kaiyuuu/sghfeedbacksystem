@@ -47,14 +47,15 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("i <3 healthcare");
+        runScheduler();
         loadData();
     }
 
     //@Scheduled(fixedDelay = 100)
-    //    @Scheduled(cron = "0 0 8 * * *")
-    //    public void runScheduler() {
-    //        emailService.dailyEmailUpdate();
-    //    }
+    @Scheduled(cron = "0 0 13 * * *")
+    public void runScheduler() {
+        emailService.dailyEmailUpdate();
+    }
     public void loadData() {
 
         if(feedbackCategoryService.findAllFeedbackCategory().isEmpty()) {
@@ -186,9 +187,9 @@ public class DataLoader implements CommandLineRunner {
         Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
                 new String("sachin.ajayan@gmail.com"), new String("password"),new String("Scrum Master"),
                 UserRoleEnum.STAFF);
-        FeedbackTeam feedbackTeam1 = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "kaiyu@hotmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam1 = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "jackyseah99@gmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
 
-        FeedbackTeam feedbackTeam2 = new FeedbackTeam("jackalJockey", "chia", "jackie", "jackie@yahoo.com.sg", "ilovetojack", "Head Accountant", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam2 = new FeedbackTeam("jackalJockey", "chia", "jackie", "jiayinglim@live.com", "ilovetojack", "Head Accountant", UserRoleEnum.PROCESSOWNER);
 
         FeedbackTeam feedbackTeam3 = new FeedbackTeam("yiaJingLim", "lim", "jiaYing", "jiaying@yahoo.com.sg", "ilovehealthcare", "Admin", UserRoleEnum.ADMIN);
 
@@ -212,7 +213,7 @@ public class DataLoader implements CommandLineRunner {
         User staff1 = staffRepository.findById(1L).get();
         User staff2 = staffRepository.findById(2L).get();
         FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(2L).get();
-        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(10L).get();
+        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(11L).get();
 
         Feedback feedback1 = new Feedback(new String ("Broken Sink"),
                 new String("The sink at level 2 men's toilet is broken pls fix :("),
@@ -249,7 +250,7 @@ public class DataLoader implements CommandLineRunner {
     LocalDateTime end = LocalDateTime.now();
     List<Feedback> feebackByDate = feedbackService.findAllFeedbackByDate(start, end);
     List<Feedback> feebackByCategory = feedbackService.findFeedbackByCategory(1L);
-    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(10L);
+    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(11L);
     List<Feedback> feedbackUnderReview = feedbackService.findFeedbacksUnderReview();
         System.out.println("feebackByDate ::");
         for(Feedback f : feebackByDate) {
