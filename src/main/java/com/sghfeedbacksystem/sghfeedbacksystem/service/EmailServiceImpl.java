@@ -8,6 +8,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -66,6 +67,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Scheduled(cron = "0 0 8 * * *")
     public void dailyEmailUpdate() {
         //System.out.println("Titties");
 
