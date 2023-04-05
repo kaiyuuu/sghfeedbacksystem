@@ -67,6 +67,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    @Scheduled(cron = "0 32 14 * * *")
     public void dailyEmailUpdate() {
         //System.out.println("Titties");
         List<User> allPO = userRepository.findUsersByUserRole(UserRoleEnum.PROCESSOWNER);
