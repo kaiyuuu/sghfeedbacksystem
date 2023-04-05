@@ -52,7 +52,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     //@Scheduled(fixedDelay = 100)
-    @Scheduled(cron = "0 0 13 * * *")
+    @Scheduled(cron = "0 16 13 * * *")
     public void runScheduler() {
         emailService.dailyEmailUpdate();
     }

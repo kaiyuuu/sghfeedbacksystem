@@ -46,7 +46,7 @@ public class EmailServiceImpl implements EmailService {
         mailSender.send(message);
         System.out.println("message sent successfully");
     }
-    // hi
+
     @Override
     public void statusChangeEmail(Long feedbackId, String statusChange) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
@@ -67,10 +67,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 8 * * *")
     public void dailyEmailUpdate() {
         //System.out.println("Titties");
-
         List<User> allPO = userRepository.findUsersByUserRole(UserRoleEnum.PROCESSOWNER);
         Map<Long, Long> PO_ID = new HashMap<>();
         for (User user : allPO) {
