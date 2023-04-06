@@ -23,7 +23,7 @@ public class AdminAnalyticsController {
     @Autowired
     FeedbackCategoryService feedbackCategoryService;
 
-    @GetMapping("/getTop3Categories")
+    @PostMapping("/getTop3Categories")
     public ResponseEntity<List<Pair<FeedbackCategory, Integer>>> getTop3Categories(@RequestBody StartEndDateDTO startEndDateDTO) {
         try {
             LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
@@ -41,7 +41,8 @@ public class AdminAnalyticsController {
             LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
             LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
             Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
-            return new ResponseEntity<Map<FeedbackCategory, Integer>>(map, HttpStatus.OK);
+//            return new ResponseEntity<Map<String, Integer>>(map, HttpStatus.OK);
+            return null;
         } catch (ParseException exception) {
             System.out.println("something went wrong with converting string");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
