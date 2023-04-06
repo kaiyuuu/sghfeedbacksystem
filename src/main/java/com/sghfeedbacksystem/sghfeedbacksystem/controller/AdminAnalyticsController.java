@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,14 +36,14 @@ public class AdminAnalyticsController {
         }
     }
 
-    @GetMapping("/getAllCategoryCounts")
-    public ResponseEntity<Map<FeedbackCategory, Integer>> getAllCategoryCounts(@RequestBody StartEndDateDTO startEndDateDTO) {
+    @PostMapping("/getAllCategoryCounts")
+    public ResponseEntity<Map<String, Integer>> getAllCategoryCounts(@RequestBody StartEndDateDTO startEndDateDTO) {
         try {
             LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
             LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
             Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
-//            return new ResponseEntity<Map<String, Integer>>(map, HttpStatus.OK);
-            return null;
+            Map<String,Integer> newMap = convertFeedbackCategoryToString(map);
+            return new ResponseEntity<Map<String, Integer>>(newMap, HttpStatus.OK);
         } catch (ParseException exception) {
             System.out.println("something went wrong with converting string");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -55,5 +56,13 @@ public class AdminAnalyticsController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
         LocalDateTime date = LocalDateTime.parse(dateString, formatter);
         return date;
+    }
+
+    public Map<String,Integer> convertFeedbackCategoryToString(Map<FeedbackCategory, Integer> feedbackCategoryIntegerMap) {
+        Map<String, Integer> map = new HashMap<>();
+        for(FeedbackCategory f : feedbackCategoryIntegerMap.keySet()) {
+            map.put(f.getFeedbackCategoryName(), feedbackCategoryIntegerMap.get(f));
+        }
+        return map;
     }
 }
