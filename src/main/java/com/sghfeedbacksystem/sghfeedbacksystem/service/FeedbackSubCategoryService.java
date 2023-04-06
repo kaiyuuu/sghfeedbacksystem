@@ -13,7 +13,7 @@ public interface FeedbackSubCategoryService {
 
     public FeedbackSubCategory findFeedbackSubCategoryByName(String feedbackSubCategory);
 
-    public FeedbackSubCategory findFeedbackSubCategoryByFeedbackTeamUser(Long userId);
+    public List<FeedbackSubCategory> findAllFeedbackSubCategoryByFeedbackTeamUser(Long userId);
 
     public FeedbackSubCategory saveFeedbackSubCategory(FeedbackSubCategory feedbackSubCategory, Long feedbackCategoryId) throws FeedbackCategoryNotFoundException;
 

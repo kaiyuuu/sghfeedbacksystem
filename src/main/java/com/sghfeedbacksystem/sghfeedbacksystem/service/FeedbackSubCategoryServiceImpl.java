@@ -33,8 +33,8 @@ public class FeedbackSubCategoryServiceImpl implements FeedbackSubCategoryServic
     }
 
     @Override
-    public FeedbackSubCategory findFeedbackSubCategoryByFeedbackTeamUser(Long userId) {
-        return feedbackSubCategoryRepository.findFeedbackSubCategoryByFeedbackTeamUser(userId);
+    public List<FeedbackSubCategory> findAllFeedbackSubCategoryByFeedbackTeamUser(Long userId) {
+        return feedbackSubCategoryRepository.findAllFeedbackSubCategoryByFeedbackTeamUser(userId);
     }
 
     public FeedbackSubCategory saveFeedbackSubCategory(FeedbackSubCategory feedbackSubCategory, Long feedbackCategoryId) throws FeedbackCategoryNotFoundException {
