@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/adminAnalytics")
 public class AdminAnalyticsController {
@@ -50,6 +51,20 @@ public class AdminAnalyticsController {
         }
     }
 
+    @PostMapping("/getStatusForFeedbacksUnderSubcategory/{subcategoryName}")
+    public ResponseEntity<Map<String, Integer>> getStatusForFeedbacksUnderSubcategory(@RequestBody StartEndDateDTO startEndDateDTO,
+                                                                                      @PathVariable("subcategoryName") String subcategoryName ) {
+        try {
+            LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
+            LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
+            Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
+            Map<String,Integer> newMap = convertFeedbackCategoryToString(map);
+            return new ResponseEntity<Map<String, Integer>>(newMap, HttpStatus.OK);
+        } catch (ParseException exception) {
+            System.out.println("something went wrong with converting string");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     public LocalDateTime convertStringToDate(String dateString) throws ParseException {
         String datePattern = "EEE MMM dd yyyy HH:mm:ss";
