@@ -7,8 +7,8 @@ import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackCategoryReposi
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackSubCategoryRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.FeedbackStatusEnum;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.exception.FeedbackCategoryNotFoundException;
-import jdk.internal.net.http.common.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -73,7 +73,7 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
         //find the counts of top 3 categories
         List<Pair<FeedbackCategory, Integer>> topThreeCategoriesInfo = new ArrayList<>();
         for (FeedbackCategory c : top3Categories) {
-            topThreeCategoriesInfo.add(new Pair<>(c, map.get(c)));
+            topThreeCategoriesInfo.add(Pair.of(c, map.get(c)));
         }
 
         return topThreeCategoriesInfo;
