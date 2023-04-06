@@ -23,6 +23,9 @@ public interface FeedbackCategoryService {
     //find number of times each category is tagged for all feedbacks submitted within given time frame
     public Map<FeedbackCategory, Integer> findFeedbackCategoryCounts(LocalDateTime startDate, LocalDateTime endDate);
 
+    //find number of times each subcategory is tagged for all feedbacks submitted within given time frame
+    public Map<FeedbackSubCategory, Integer> findFeedbackSubCategoryCounts(LocalDateTime startDate, LocalDateTime endDate);
+
     //finds top 3 categories where feedback were given most within the given time frame
     public List<Pair<FeedbackCategory, Integer>> findPopularFeedbackCategories(LocalDateTime startDate, LocalDateTime endDate);
 

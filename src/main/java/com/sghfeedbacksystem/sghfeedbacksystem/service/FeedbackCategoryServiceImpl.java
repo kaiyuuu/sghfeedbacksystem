@@ -82,7 +82,6 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
     //find number of times each category is tagged for all feedbacks submitted within given time frame
     @Override
     public Map<FeedbackCategory, Integer> findFeedbackCategoryCounts(LocalDateTime startDate, LocalDateTime endDate) {
-
         Map<FeedbackCategory, Integer> map = new HashMap<>();
         List<Feedback> feedbacks = feedbackService.findAllFeedbackByDate(startDate, endDate);
 
@@ -99,4 +98,24 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
         }
         return map;
     }
+    //find number of times each subcategory is tagged for all feedbacks submitted within given time frame
+    @Override
+    public Map<FeedbackSubCategory, Integer> findFeedbackSubCategoryCounts(LocalDateTime startDate, LocalDateTime endDate) {
+        Map<FeedbackSubCategory, Integer> map = new HashMap<>();
+        List<Feedback> feedbacks = feedbackService.findAllFeedbackByDate(startDate, endDate);
+
+        //count instances of subcategories
+        for (Feedback f : feedbacks) {
+            FeedbackSubCategory currentSubCategory = f.getFeedbackSubCategory();
+            if (map.containsKey(currentSubCategory)) {
+                Integer oldCount = map.get(currentSubCategory);
+                oldCount += 1;
+                map.replace(currentSubCategory, oldCount);
+            } else {
+                map.put(currentSubCategory, 1);
+            }
+        }
+        return map;    }
 }
+
+

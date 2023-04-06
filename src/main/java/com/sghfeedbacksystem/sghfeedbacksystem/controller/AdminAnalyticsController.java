@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/adminAnalytics")
@@ -30,6 +31,19 @@ public class AdminAnalyticsController {
             List<Pair<FeedbackCategory, Integer>> list = feedbackCategoryService.findPopularFeedbackCategories(startDate, endDate);
             return new ResponseEntity<List<Pair<FeedbackCategory, Integer>>>(list, HttpStatus.OK);
         } catch (ParseException exception) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getAllCategoryCounts")
+    public ResponseEntity<Map<FeedbackCategory, Integer>> getAllCategoryCounts(@RequestBody StartEndDateDTO startEndDateDTO) {
+        try {
+            LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
+            LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
+            Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
+            return new ResponseEntity<Map<FeedbackCategory, Integer>>(map, HttpStatus.OK);
+        } catch (ParseException exception) {
+            System.out.println("something went wrong with converting string");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
