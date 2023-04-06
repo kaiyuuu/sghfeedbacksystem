@@ -74,6 +74,7 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory restrooms = new FeedbackSubCategory("Restrooms", "heres the description...");
         restrooms.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
         FeedbackSubCategory staffPantry = new FeedbackSubCategory("Staff Pantry", "heres the description...");
+        staffPantry.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
         FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
 
         FeedbackSubCategory biomedical = new FeedbackSubCategory("Biomedical", "heres the description...");
@@ -214,6 +215,7 @@ public class DataLoader implements CommandLineRunner {
         User staff2 = staffRepository.findById(2L).get();
         FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(2L).get();
         FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(10L).get();
+        FeedbackSubCategory feedbackSubCategory3 = feedbackSubCategoryRepository.findById(3L).get();
 
         Feedback feedback1 = new Feedback(new String ("Broken Sink"),
                 new String("The sink at level 2 men's toilet is broken pls fix :("),
@@ -225,12 +227,14 @@ public class DataLoader implements CommandLineRunner {
         Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
                 new String("Dummy feedback"),
                 Boolean.TRUE, LocalDateTime.now());
+        Feedback feedback4 = new Feedback("Pantry no food", "There is no more food in the pantry left", Boolean.FALSE, LocalDateTime.now());
 //        String feedbackResponseTitle, String feedbackResponseBody, LocalDateTime feedbackResponseDate
         FeedbackResponse feedbackResponse1 = new FeedbackResponse("ok noted", "ok i see whr u coming from", LocalDateTime.now());
         try {
             feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
             feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);
             feedbackService.saveFeedback((Staff) staff2, feedback3, feedbackSubCategory2);
+            feedbackService.saveFeedback((Staff) staff1, feedback4, feedbackSubCategory3);
             feedbackResponseService.acceptFeedback(1L, new ResponseBodyPublishStatusDTO("ok noted", true, ""));
         } catch(StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
             System.out.println("something went wrong while loading feedback");

@@ -17,7 +17,7 @@ public class FeedbackSubCategory {
     @JoinColumn(name = "feedbackCategoryId")
     private FeedbackCategory feedbackCategory;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "feedbackSubCategoryPo")
     private FeedbackTeam feedbackSubCategoryPo;
 

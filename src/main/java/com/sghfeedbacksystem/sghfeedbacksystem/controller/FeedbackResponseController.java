@@ -38,8 +38,15 @@ FeedbackResponseController {
     @GetMapping("/getFeedbackUnderPO/{userId}")
     public ResponseEntity<List<FeedbackDTO>> getAllFeedbacksUnderPo(@PathVariable("userId") Long userId) {
         User feedbackTeamUser = userService.findUserById(userId);
-        FeedbackSubCategory subCategory = feedbackSubCategoryService.findFeedbackSubCategoryByFeedbackTeamUser(feedbackTeamUser.getUserId());
-        List<Feedback> listOfFeedbackUnderPo = feedbackService.findFeedbackBySubCategory(subCategory.getSubCategoryId());
+        List<FeedbackSubCategory> subCategoriesUnderPO = feedbackSubCategoryService.findAllFeedbackSubCategoryByFeedbackTeamUser(feedbackTeamUser.getUserId());
+        List<Feedback> listOfFeedbackUnderPo = new ArrayList<>();
+        for (FeedbackSubCategory feedbackSubCategory : subCategoriesUnderPO) {
+            List<Feedback> listOfFeedbackUnderSubCategory = feedbackService.findFeedbackBySubCategory(feedbackSubCategory.getSubCategoryId());
+            for (Feedback f : listOfFeedbackUnderSubCategory) {
+                listOfFeedbackUnderPo.add(f);
+            }
+        }
+
         List<FeedbackDTO> feedbackDTOS = new ArrayList<>();
         for (Feedback f : listOfFeedbackUnderPo) {
             FeedbackDTO feedbackDTO = new FeedbackDTO(userId,f.getFeedbackId(), f.getFeedbackAuthor().getUsername(),
