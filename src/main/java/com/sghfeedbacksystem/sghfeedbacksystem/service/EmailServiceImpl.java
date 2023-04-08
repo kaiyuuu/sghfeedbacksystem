@@ -5,9 +5,11 @@ import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.FeedbackSubCategoryRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.repository.UserRepository;
 import com.sghfeedbacksystem.sghfeedbacksystem.util.enumeration.UserRoleEnum;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("jackyseah99@outlook.com");
+        message.setFrom("hsienjiejiayingsachinkaiyu@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
@@ -48,28 +50,59 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendEmail2(String to, String subject, String body) {
+        /*SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("jackyseah99@outlook.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body, true);*/
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("hsienjiejiayingsachinkaiyu@gmail.com");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+            mailSender.send(message);
+            System.out.println("message sent successfully");
+        } catch (Exception e) {
+            System.out.println("Something went wrong creating MimeMessageHelper");
+        }
+    }
+
+    @Override
     public void statusChangeEmail(Long feedbackId, String statusChange) {
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         Staff staff = feedback.getFeedbackAuthor();
         String to = staff.getEmail();
-        String subject = "Update on Feedback Status";
+        String subject = "Update on Feedback Status! ";
         String body = new String();
         if (statusChange.equals("accept")) {
-            body = "Feedback ID " + feedbackId +  ": Status Changed from: SUBMITTED to REVIEWING";
+            body += "<h1 style='font-family:serif;font-size:16;color:black;'>Feedback ID " +
+                    feedbackId +
+                    " Status Changed from: SUBMITTED to REVIEWING</h1>";
         }
         else if (statusChange.equals("reject")) {
-            body = "Feedback ID " + feedbackId +  ": Status Changed from: SUBMITTED to CLOSED";
+            body += "<h1 style='font-family:serif;font-size:16;color:black;'>Feedback ID " +
+                    feedbackId +
+                    " Status Changed from: SUBMITTED to CLOSED</h1>";
         }
         else {
-            body = "Feedback ID " + feedbackId +  ": Status Changed from: REVIEWING to CLOSED";
+            body += "<h1 style='font-family:serif;font-size:16;color:black;'>Feedback ID "
+                    + feedbackId +
+                    " Status Changed from: REVIEWING to CLOSE</h1>";
         }
-        sendEmail(to, subject, body);
+        String feedbackTitle = feedback.getFeedbackTitle();
+        body += "<h1 style='font-family:serif;font-size:14;color:black;'>Title: <b>" + feedbackTitle + "</b></h1>";
+        String feedbackBody = feedback.getFeedbackBody();
+        body += "<h2 style='font-family:serif;font-size:14;color:black;'>Description: " + feedbackBody + "</h2>";
+        //body += "<img src='../util/sgh-logo.jpg' alt='hello'>";
+        sendEmail2(to, subject, body);
     }
 
     @Override
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = "0 26 17 * * *")
     public void dailyEmailUpdate() {
-        //System.out.println("Titties");
         List<User> allPO = userRepository.findUsersByUserRole(UserRoleEnum.PROCESSOWNER);
         Map<Long, Long> PO_ID = new HashMap<>();
         for (User user : allPO) {
