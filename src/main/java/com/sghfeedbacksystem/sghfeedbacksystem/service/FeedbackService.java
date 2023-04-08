@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface FeedbackService {
 
@@ -25,11 +26,11 @@ public interface FeedbackService {
     List<Feedback> findFeedbacksUnderReview();
     List<Feedback> findFeedbacksSubmitted();
     List<Feedback> findFeedbacksPublished();
-
     Feedback findFeedbackById(Long feedbackId);
-
     Feedback saveFeedback(Staff staff, Feedback feedback, FeedbackSubCategory FeedbackSubCategory) throws StaffNotFoundException, FeedbackCategoryNotFoundException;
     Long deleteFeedback(Long feedbackId) throws FeedbackNotFoundException, CannotDeleteFeedbackUnderReviewException;
+
+    Map<String, Integer> getStatusOfFeedbacks(List<Feedback> feedbacks);
 
 
 

@@ -5,6 +5,7 @@ import com.sghfeedbacksystem.sghfeedbacksystem.dto.StartEndDateDTO;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.Feedback;
 import com.sghfeedbacksystem.sghfeedbacksystem.model.FeedbackCategory;
 import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackCategoryService;
+import com.sghfeedbacksystem.sghfeedbacksystem.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class AdminAnalyticsController {
 
     @Autowired
     FeedbackCategoryService feedbackCategoryService;
+    @Autowired
+    FeedbackService feedbackService;
 
     @PostMapping("/getTop3Categories")
     public ResponseEntity<List<Pair<FeedbackCategory, Integer>>> getTop3Categories(@RequestBody StartEndDateDTO startEndDateDTO) {
@@ -51,20 +54,35 @@ public class AdminAnalyticsController {
         }
     }
 
-    @PostMapping("/getStatusForFeedbacksUnderSubcategory/{subcategoryName}")
-    public ResponseEntity<Map<String, Integer>> getStatusForFeedbacksUnderSubcategory(@RequestBody StartEndDateDTO startEndDateDTO,
-                                                                                      @PathVariable("subcategoryName") String subcategoryName ) {
+//    @PostMapping("/getStatusForFeedbacksUnderSubcategory/{subcategoryName}")
+//    public ResponseEntity<Map<String, Integer>> getStatusForFeedbacksUnderSubcategory(@RequestBody StartEndDateDTO startEndDateDTO,
+//                                                                                      @PathVariable("subcategoryName") String subcategoryName ) {
+//        try {
+//            LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
+//            LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
+//            Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
+//            Map<String,Integer> newMap = convertFeedbackCategoryToString(map);
+//            return new ResponseEntity<Map<String, Integer>>(newMap, HttpStatus.OK);
+//        } catch (ParseException exception) {
+//            System.out.println("something went wrong with converting string");
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    @PostMapping("/getAggregatedFeedbackStatus")
+    public ResponseEntity<Map<String, Integer>> getAggregatedFeedbackStatus(@RequestBody StartEndDateDTO startEndDateDTO) {
         try {
             LocalDateTime startDate = convertStringToDate(startEndDateDTO.getStartDateString());
             LocalDateTime endDate = convertStringToDate(startEndDateDTO.getEndDateString());
-            Map<FeedbackCategory, Integer> map = feedbackCategoryService.findFeedbackCategoryCounts(startDate, endDate);
-            Map<String,Integer> newMap = convertFeedbackCategoryToString(map);
-            return new ResponseEntity<Map<String, Integer>>(newMap, HttpStatus.OK);
+            List<Feedback> feedbacks = feedbackService.findAllFeedbackByDate(startDate, endDate);
+            Map<String, Integer> map = feedbackService.getStatusOfFeedbacks(feedbacks);
+            return new ResponseEntity<Map<String, Integer>>(map, HttpStatus.OK);
         } catch (ParseException exception) {
             System.out.println("something went wrong with converting string");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
     public LocalDateTime convertStringToDate(String dateString) throws ParseException {
         String datePattern = "EEE MMM dd yyyy HH:mm:ss";

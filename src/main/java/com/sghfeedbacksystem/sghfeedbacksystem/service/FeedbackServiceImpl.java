@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -145,5 +147,28 @@ public class FeedbackServiceImpl implements FeedbackService{
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setPublished(true);
         return feedbackRepository.save(feedback);
+    }
+
+
+    @Override
+    public Map<String, Integer> getStatusOfFeedbacks(List<Feedback> feedbacks) {
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("submitted", 0);
+        map.put("reviewing", 0);
+        map.put("closed", 0);
+        for(Feedback f : feedbacks) {
+            if(f.getFeedbackStatus().equals(FeedbackStatusEnum.SUBMITTED)) {
+                int newCount = map.get("submitted") + 1;
+                map.replace("submitted", newCount);
+            } else if(f.getFeedbackStatus().equals(FeedbackStatusEnum.REVIEWING)) {
+                int newCount = map.get("reviewing") + 1;
+                map.replace("reviewing", newCount);
+            } else {
+                int newCount = map.get("closed") + 1;
+                map.replace("closed", newCount);
+            }
+        }
+        return map;
     }
 }

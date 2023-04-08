@@ -115,7 +115,10 @@ public class FeedbackCategoryServiceImpl implements FeedbackCategoryService {
                 map.put(currentSubCategory, 1);
             }
         }
-        return map;    }
+        return map;
+    }
+
+
 }
 
 
