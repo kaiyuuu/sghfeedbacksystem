@@ -74,7 +74,7 @@ FeedbackResponseController {
         return new ResponseEntity<List<FeedbackDTO>>(feedbackDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/getFeedbackUnderPOByDate/{userId}")
+    @PostMapping("/getFeedbackUnderPOByDate/{userId}")
     public ResponseEntity<List<FeedbackDTO>> getAllFeedbacksUnderPoByDate(@PathVariable("userId") Long userId, @RequestBody StartEndDateDTO startEndDateDTO) {
         try {
         List<FeedbackDTO> feedbacksUnderPo = getAllFeedbacksUnderPo(userId).getBody();
