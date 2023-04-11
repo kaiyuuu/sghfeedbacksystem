@@ -71,10 +71,9 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("loading feedback subcategories...");
 
         FeedbackSubCategory room = new FeedbackSubCategory("Room", "heres the description...");
+        room.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(3L).get());
         FeedbackSubCategory restrooms = new FeedbackSubCategory("Restrooms", "heres the description...");
-        restrooms.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
         FeedbackSubCategory staffPantry = new FeedbackSubCategory("Staff Pantry", "heres the description...");
-        staffPantry.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(4L).get());
         FeedbackSubCategory bins = new FeedbackSubCategory("Bins", "heres the description...");
 
         FeedbackSubCategory biomedical = new FeedbackSubCategory("Biomedical", "heres the description...");
@@ -82,12 +81,13 @@ public class DataLoader implements CommandLineRunner {
         FeedbackSubCategory plumbingSanitation = new FeedbackSubCategory("Plumbing & Sanitation", "heres the description...");
 
         FeedbackSubCategory staffBenefits = new FeedbackSubCategory("Staff Benefits", "heres the description...");
+        staffBenefits.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(2L).get());
         FeedbackSubCategory harrassment = new FeedbackSubCategory("Harassment & Abuse", "heres the description...");
         FeedbackSubCategory bullying = new FeedbackSubCategory("Bullying", "heres the description...");
-        bullying.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(5L).get());
         FeedbackSubCategory workArrangements = new FeedbackSubCategory("Work Arrangements", "heres the description...");
         FeedbackSubCategory unfairPractices = new FeedbackSubCategory("Unfair Practice", "heres the description...");
         FeedbackSubCategory workplaceCulture = new FeedbackSubCategory("Workplace Culture", "heres the description...");
+        workplaceCulture.setFeedbackSubCategoryPo((FeedbackTeam) feedbackTeamRepository.findById(2L).get());
 
         FeedbackSubCategory software = new FeedbackSubCategory("Software", "heres the description...");
         FeedbackSubCategory hardwareIT = new FeedbackSubCategory("IT Hardware", "heres the description...");
@@ -177,27 +177,18 @@ public class DataLoader implements CommandLineRunner {
 //        FeedbackSubCategory bullying = feedbackSubCategoryRepository.getReferenceById(11L);
 
 
-        Staff staff1 = new Staff(new String("garyOng"),new String("gary"),new String("ong"),
-                new String("jackyseah99@gmail.com"), new String("password"),new String("Assistance Director"),
+        Staff staff1 = new Staff(new String("sghstaff"),new String("sgh"),new String("staff"),
+                new String("jiayinglim@live.com"), new String("password"),new String("Assistance Director"),
                 UserRoleEnum.STAFF);
 
-        Staff staff2 = new Staff(new String("euniceTan"),new String("eunice"),new String("ong"),
-                new String("dreamtobehotstuffeverynightsin@gmail.com"), new String("password"),new String("Manager"),
-                UserRoleEnum.STAFF);
+        FeedbackTeam feedbackTeam1 = new FeedbackTeam("po1eunice", "eunice", "po1", "jackyseah99@gmail.com", "password", "Team Lead", UserRoleEnum.PROCESSOWNER);
 
-        Staff staff3 = new Staff(new String("aachinSajayan"),new String("sachin"),new String("ajayan"),
-                new String("sachin.ajayan@gmail.com"), new String("password"),new String("Scrum Master"),
-                UserRoleEnum.STAFF);
-        FeedbackTeam feedbackTeam1 = new FeedbackTeam("kaiyuuuu", "chong", "kaiyu", "jackyseah99@gmail.com", "menlovekaiyu96", "Team Lead", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam2 = new FeedbackTeam("po2gary", "gary", "po2", "jiayinglim@live.com", "password", "Head Accountant", UserRoleEnum.PROCESSOWNER);
 
-        FeedbackTeam feedbackTeam2 = new FeedbackTeam("jackalJockey", "chia", "jackie", "jiayinglim@live.com", "ilovetojack", "Head Accountant", UserRoleEnum.PROCESSOWNER);
-
-        FeedbackTeam feedbackTeam3 = new FeedbackTeam("yiaJingLim", "lim", "jiaYing", "jiaying@yahoo.com.sg", "ilovehealthcare", "Admin", UserRoleEnum.ADMIN);
+        FeedbackTeam feedbackTeam3 = new FeedbackTeam("owbadmin", "owb", "admin", "jiayinglim@live.com", "password", "Admin", UserRoleEnum.ADMIN);
 
 
         staffRepository.save(staff1);
-        staffRepository.save(staff2);
-        staffRepository.save(staff3);
 //        restrooms.setFeedbackSubCategoryPo( feedbackTeam1);
 //        bullying.setFeedbackSubCategoryPo(feedbackTeam2);
         feedbackTeamRepository.save(feedbackTeam1);
@@ -212,30 +203,27 @@ public class DataLoader implements CommandLineRunner {
 
     public void loadFeedback() {
         User staff1 = staffRepository.findById(1L).get();
-        User staff2 = staffRepository.findById(2L).get();
-        FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(2L).get();
-        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(10L).get();
-        FeedbackSubCategory feedbackSubCategory3 = feedbackSubCategoryRepository.findById(3L).get();
+        FeedbackSubCategory feedbackSubCategory1 = feedbackSubCategoryRepository.findById(1L).get();
+        FeedbackSubCategory feedbackSubCategory2 = feedbackSubCategoryRepository.findById(8L).get();
+        FeedbackSubCategory feedbackSubCategory3 = feedbackSubCategoryRepository.findById(13L).get();
 
-        Feedback feedback1 = new Feedback(new String ("Broken Sink"),
-                new String("The sink at level 2 men's toilet is broken pls fix :("),
+        Feedback feedback1 = new Feedback(new String ("Room Feedback"),
+                new String("Feedback about room in the facility"),
                 Boolean.FALSE, LocalDateTime.now());
-        Feedback feedback2 = new Feedback(new String ("Boss bully alert"),
-                new String("my boss sachin ajayan has been asking us to buy coffee for him 3 times a day everyday"),
+        Feedback feedback2 = new Feedback(new String ("Feedback on staff benefits"),
+                new String("Feedback about staff benefits"),
                 Boolean.TRUE, LocalDateTime.now());
         feedback2.setPublished(true);
-        Feedback feedback3 = new Feedback(new String ("Dummy feedback"),
-                new String("Dummy feedback"),
+        Feedback feedback3 = new Feedback(new String ("Workplace Culture"),
+                new String("Workplace Culture feedback"),
                 Boolean.TRUE, LocalDateTime.now());
-        Feedback feedback4 = new Feedback("Pantry no food", "There is no more food in the pantry left", Boolean.FALSE, LocalDateTime.now());
-//        String feedbackResponseTitle, String feedbackResponseBody, LocalDateTime feedbackResponseDate
-        FeedbackResponse feedbackResponse1 = new FeedbackResponse("ok noted", "ok i see whr u coming from", LocalDateTime.now());
+        FeedbackResponse feedbackResponse1 = new FeedbackResponse("Noted", "Response to feedback", LocalDateTime.now());
         try {
             feedbackService.saveFeedback((Staff) staff1, feedback1, feedbackSubCategory1);
-            feedbackService.saveFeedback((Staff) staff2, feedback2, feedbackSubCategory2);
-            feedbackService.saveFeedback((Staff) staff2, feedback3, feedbackSubCategory2);
-            feedbackService.saveFeedback((Staff) staff1, feedback4, feedbackSubCategory3);
-            feedbackResponseService.acceptFeedback(1L, new ResponseBodyPublishStatusDTO("ok noted", true, ""));
+            feedbackService.saveFeedback((Staff) staff1, feedback2, feedbackSubCategory2);
+            feedbackService.saveFeedback((Staff) staff1, feedback3, feedbackSubCategory3);
+
+            feedbackResponseService.acceptFeedback(1L, new ResponseBodyPublishStatusDTO("Noted", true, ""));
         } catch(StaffNotFoundException | FeedbackCategoryNotFoundException exception) {
             System.out.println("something went wrong while loading feedback");
         }
@@ -254,7 +242,7 @@ public class DataLoader implements CommandLineRunner {
     LocalDateTime end = LocalDateTime.now();
     List<Feedback> feebackByDate = feedbackService.findAllFeedbackByDate(start, end);
     List<Feedback> feebackByCategory = feedbackService.findFeedbackByCategory(1L);
-    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(10L);
+    List<Feedback> feebackBySubCategory = feedbackService.findFeedbackBySubCategory(1L);
     List<Feedback> feedbackUnderReview = feedbackService.findFeedbacksUnderReview();
         System.out.println("feebackByDate ::");
         for(Feedback f : feebackByDate) {
