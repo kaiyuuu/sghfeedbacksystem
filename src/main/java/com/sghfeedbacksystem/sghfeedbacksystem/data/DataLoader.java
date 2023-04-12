@@ -178,14 +178,14 @@ public class DataLoader implements CommandLineRunner {
 
 
         Staff staff1 = new Staff(new String("sghstaff"),new String("sgh"),new String("staff"),
-                new String("jiayinglim@live.com"), new String("password"),new String("Assistance Director"),
+                new String("ong.b.k.gary@gmail.com"), new String("password"),new String("Assistance Director"),
                 UserRoleEnum.STAFF);
 
-        FeedbackTeam feedbackTeam1 = new FeedbackTeam("po1eunice", "eunice", "po1", "jackyseah99@gmail.com", "password", "Team Lead", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam1 = new FeedbackTeam("po1eunice", "eunice", "po1", "eunice.tan.h.y@sgh.com.sg", "password", "Team Lead", UserRoleEnum.PROCESSOWNER);
 
-        FeedbackTeam feedbackTeam2 = new FeedbackTeam("po2gary", "gary", "po2", "jiayinglim@live.com", "password", "Head Accountant", UserRoleEnum.PROCESSOWNER);
+        FeedbackTeam feedbackTeam2 = new FeedbackTeam("po2gary", "gary", "po2", "gary.ong.b.k@sgh.com.sg", "password", "Head Accountant", UserRoleEnum.PROCESSOWNER);
 
-        FeedbackTeam feedbackTeam3 = new FeedbackTeam("owbadmin", "owb", "admin", "jiayinglim@live.com", "password", "Admin", UserRoleEnum.ADMIN);
+        FeedbackTeam feedbackTeam3 = new FeedbackTeam("owbadmin", "owb", "admin", "sghowb@gmail.com", "password", "Admin", UserRoleEnum.ADMIN);
 
 
         staffRepository.save(staff1);
