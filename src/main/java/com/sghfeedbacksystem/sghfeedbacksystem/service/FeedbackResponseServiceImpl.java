@@ -47,7 +47,7 @@ public class FeedbackResponseServiceImpl implements FeedbackResponseService{
         System.out.println(responseBodyPublishStatusDTO.getPublishStatus());
         Feedback feedback = feedbackRepository.findById(feedbackId).get();
         feedback.setFeedbackStatus(FeedbackStatusEnum.REVIEWING);
-
+        updatePublishStatus(feedback, responseBodyPublishStatusDTO);
         FeedbackResponse feedbackResponse = createFeedbackResponse(feedback, responseBodyPublishStatusDTO);
 
         return feedbackResponse;
