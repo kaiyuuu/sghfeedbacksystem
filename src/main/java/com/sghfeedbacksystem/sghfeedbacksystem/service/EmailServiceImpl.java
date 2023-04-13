@@ -101,7 +101,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    @Scheduled(cron = "0 26 17 * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     public void dailyEmailUpdate() {
         List<User> allPO = userRepository.findUsersByUserRole(UserRoleEnum.PROCESSOWNER);
         Map<Long, Long> PO_ID = new HashMap<>();
