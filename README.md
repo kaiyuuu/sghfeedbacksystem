@@ -1,4 +1,4 @@
-# Feedbacksystem
+# Closed-Loop Feedback System
 # IS4250 Group Project
 
 ## Description
